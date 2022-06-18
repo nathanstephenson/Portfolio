@@ -1,0 +1,9 @@
+.NavbarItem {
+	display: block;
+	background-color: var(--navbar-background-color);
+
+}
+
+.NavbarItem :hover {
+	background-color: aqua;
+}
