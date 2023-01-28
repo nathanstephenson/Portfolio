@@ -47,3 +47,8 @@
 	margin: var(--navbar-width-thin);
 	margin-left: calc(var(--navbar-width-thin) * 1.5);
 }
+
+img {
+	max-width: 100%;
+	height: auto;
+}
