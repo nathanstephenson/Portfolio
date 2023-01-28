@@ -8,7 +8,7 @@ export default function Main() {
 	return(
 		<Router>
 			<Navbar />
-			<div>
+			<div className='App-main'>
 				<Routes>
 					<Route path="" element={<Home/>} />
 				</Routes>

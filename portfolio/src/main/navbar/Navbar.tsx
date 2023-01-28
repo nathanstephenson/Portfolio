@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from 'react-router-dom'
 
 const NAVBAR_WIDTH = "--navbar-width"
+const NAVBAR = "Navbar"
+const APP = "App-main"
 
 export default function Navbar() {
 
@@ -22,9 +24,11 @@ function NavbarItem(props: {name: string, linkTo: string}) {
 }
 
 function widen() {
-	document.getElementById("Navbar")!.style.width = "20wv"
+	document.getElementById(NAVBAR)!.style.width = "20vw"
+	document.getElementById(APP)!.style.width = "80vw"
 }
 
 function shrink() {
-	document.getElementById("Navbar")!.style.width = document.documentElement.style.getPropertyValue(NAVBAR_WIDTH)
+	document.getElementById(NAVBAR)!.style.width = document.documentElement.style.getPropertyValue(NAVBAR_WIDTH)
+	document.getElementById(APP)!.style.width = "90vw"
 }
