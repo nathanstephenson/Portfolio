@@ -1,4 +1,3 @@
-import React from "react";
 import initiald from '../../images/initiald.jpg'
 
 export default function Home() {
