@@ -1,9 +1,26 @@
+.Navbar {
+	display: flex;
+	flex-direction: column;
+	background-color: white;
+	position: fixed;
+	top: 0vh;
+	bottom: 0vh;
+	left: 0vh;
+	width: var(--navbar-width-thin);
+	min-height: 100vh;
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	list-style: none;
+	align-items: center;
+	transition-duration: var(--transition-speed);
+}
+
 .NavbarItem {
 	display: block;
-	background-color: var(--navbar-background-color);
 
 }
 
 .NavbarItem :hover {
-	background-color: aqua;
+	background-color: var(--background-colour);
 }

@@ -1,6 +1,7 @@
 :root {
-	--navbar-width: 10vw;
-	--navbar-background-colour: #000;
+	--transition-speed: 100ms;
+
+	--background-colour: #282c34;
 }
 
 .App {
@@ -19,7 +20,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: var(--background-colour);
   min-height: 100vh;
   display: flex;
   flex-direction: row;
@@ -43,25 +44,6 @@
 }
 
 .App-main {
-	margin-left: var(--navbar-width);
-}
-
-.Navbar {
-	/* --background-colour: rgb(160, 160, 160); */
-
-	display: flex;
-	flex-direction: column;
-	background-color: var(--navbar-background-color);
-	position: fixed;
-	top: 0vh;
-	bottom: 0vh;
-	left: 0vh;
-	width: var(--navbar-width);
-	min-height: 100vh;
-	margin: 0;
-	padding: 0;
-	height: 100%;
-	list-style: none;
-	align-items: center;
-	transition-duration: 100ms;
+	margin: var(--navbar-width-thin);
+	margin-left: calc(var(--navbar-width-thin) * 1.5);
 }

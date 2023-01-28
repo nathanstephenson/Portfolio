@@ -1,11 +1,13 @@
-import React from "react";
 import { Link } from 'react-router-dom'
+import './Navbar.css'
 
-const NAVBAR_WIDTH = "--navbar-width"
 const NAVBAR = "Navbar"
-const APP = "App-main"
+const NAVBAR_WIDTH_THIN = "10vw"
+const NAVBAR_WIDTH_WIDE = "20vw"
 
 export default function Navbar() {
+	document.documentElement.style.setProperty("--navbar-width-thin", NAVBAR_WIDTH_THIN)
+	document.documentElement.style.setProperty("--navbar-width-wide", NAVBAR_WIDTH_WIDE)
 
 	return (
 		<div className="Navbar" id="Navbar" onMouseOver={()=>{widen()}} onMouseLeave={()=>{shrink()}}>
@@ -24,11 +26,9 @@ function NavbarItem(props: {name: string, linkTo: string}) {
 }
 
 function widen() {
-	document.getElementById(NAVBAR)!.style.width = "20vw"
-	document.getElementById(APP)!.style.width = "80vw"
+	document.getElementById(NAVBAR)!.style.width = NAVBAR_WIDTH_WIDE
 }
 
 function shrink() {
-	document.getElementById(NAVBAR)!.style.width = document.documentElement.style.getPropertyValue(NAVBAR_WIDTH)
-	document.getElementById(APP)!.style.width = "90vw"
+	document.getElementById(NAVBAR)!.style.width = NAVBAR_WIDTH_THIN
 }
