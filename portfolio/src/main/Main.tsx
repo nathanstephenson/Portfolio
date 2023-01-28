@@ -1,7 +1,7 @@
 import { HashRouter as Router, Routes, Route } from 'react-router-dom'
 
-import Navbar from './navbar/Navbar';
-import Home from './home/Home'
+import Navbar from './navbar/Navbar'
+import Home from './pages/home/Home'
 
 export default function Main() {
 	return(
