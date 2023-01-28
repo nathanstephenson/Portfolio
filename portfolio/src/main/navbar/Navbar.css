@@ -1,7 +1,7 @@
 .Navbar {
 	display: flex;
 	flex-direction: column;
-	background-color: white;
+	background: white;
 	position: fixed;
 	top: 0vh;
 	bottom: 0vh;
@@ -18,7 +18,7 @@
 
 .NavbarItem {
 	display: block;
-
+	transition-duration: var(--transition-speed);
 }
 
 .NavbarItem :hover {
