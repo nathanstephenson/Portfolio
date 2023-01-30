@@ -12,8 +12,8 @@ const WIDE_HOME = SMALL_HOME + ' HOME'
 const SMALL_ABOUT = '\u2139'
 const WIDE_ABOUT = SMALL_ABOUT + ' ABOUT'
 
-const DAY_LOGO = '\u2600'
-const NIGHT_LOGO = '\u236E'
+const DAY_LOGO = '\u{26C5}'
+const NIGHT_LOGO = '\u{1F312}'
 
 export default function Navbar() {
 	document.documentElement.style.setProperty("--navbar-width-thin", NAVBAR_WIDTH_THIN)
@@ -48,17 +48,17 @@ export default function Navbar() {
 	}
 
 	const updateNightMode = () => {
-		const darkMode = pageState.darkMode
+		const darkMode = !pageState.darkMode
 		setPageState({
 			currentPage: pageState.currentPage,
-			darkMode: !darkMode
+			darkMode: darkMode
 		})
 		setTextState({
 			home: textState.home,
 			about: textState.about,
 			dark: darkMode ? NIGHT_LOGO : DAY_LOGO
 		})
-		if(pageState.darkMode){
+		if(darkMode){
 			document.documentElement.style.setProperty('--background-colour-primary', 'var(--background-colour-primary-dark)')
 			document.documentElement.style.setProperty('--background-colour-secondary', 'var(--background-colour-secondary-dark)')
 			document.documentElement.style.setProperty('--text-colour', 'var(--background-colour-primary-light)')
