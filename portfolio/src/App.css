@@ -2,7 +2,7 @@
 	--transition-speed: 100ms;
 
 	--background-colour-primary-dark: #282c34;
-	--background-colour-secondary-dark: #B8B8FF;
+	--background-colour-secondary-dark: #585886;
 	--background-colour-primary-light: #F8F7FF;
 	--background-colour-secondary-light: #ffeedd;
 	--background-colour-primary: var(--background-colour-primary-dark);
@@ -12,17 +12,12 @@
 
 .App {
   text-align: center;
+  transition-duration: var(--transition-speed);
 }
 
 a:link { text-decoration: none; }
-
-
-a:visited { text-decoration: none; }
-
-
+a:visited { text-decoration: none; color: var(--text-colour); }
 a:hover { text-decoration: none; }
-
-
 a:active { text-decoration: none; }
 
 .App-logo {
