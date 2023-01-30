@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import '../../App.css'
 import './Navbar.css'
 
 const NAVBAR = "Navbar"
@@ -20,12 +21,12 @@ export default function Navbar() {
 
 	var [pageState, setPageState] = useState({
 		currentPage: "",
-		darkMode: false
+		darkMode: true
 	})
 	var [textState, setTextState] = useState({
 		home: SMALL_HOME,
 		about: SMALL_ABOUT,
-		dark: darkModeToggleText(pageState)
+		dark: NIGHT_LOGO
 	})
 
 	function widen() {
@@ -47,15 +48,25 @@ export default function Navbar() {
 	}
 
 	const updateNightMode = () => {
+		const darkMode = pageState.darkMode
 		setPageState({
 			currentPage: pageState.currentPage,
-			darkMode: !pageState.darkMode
+			darkMode: !darkMode
 		})
 		setTextState({
 			home: textState.home,
 			about: textState.about,
-			dark: darkModeToggleText(pageState)
+			dark: darkMode ? NIGHT_LOGO : DAY_LOGO
 		})
+		if(pageState.darkMode){
+			document.documentElement.style.setProperty('--background-colour-primary', 'var(--background-colour-primary-dark)')
+			document.documentElement.style.setProperty('--background-colour-secondary', 'var(--background-colour-secondary-dark)')
+			document.documentElement.style.setProperty('--text-colour', 'var(--background-colour-primary-light)')
+		} else {
+			document.documentElement.style.setProperty('--background-colour-primary', 'var(--background-colour-primary-light)')
+			document.documentElement.style.setProperty('--background-colour-secondary', 'var(--background-colour-secondary-light)')
+			document.documentElement.style.setProperty('--text-colour', 'var(--background-colour-primary-dark)')
+		}
 	}
 
 	const updatePageState = (linkTo: string) => {
@@ -64,7 +75,6 @@ export default function Navbar() {
 			darkMode: pageState.darkMode
 		})
 	}
-
 
 	return (
 		<div className="Navbar" id="Navbar" onMouseOver={widen} onMouseLeave={shrink}>
@@ -81,8 +91,4 @@ function NavbarItem(props: {name: string, linkTo: string, onClick: (linkTo: stri
 			<Link to={props.linkTo}>{props.name}</Link>
 		</div>
 	)
-}
-
-function darkModeToggleText(pageState:any) : string{
-	return pageState.darkMode ? NIGHT_LOGO : DAY_LOGO
 }
