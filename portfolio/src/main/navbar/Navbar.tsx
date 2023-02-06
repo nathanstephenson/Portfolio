@@ -1,17 +1,16 @@
-import { useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import '../../App.css'
 import './Navbar.css'
 
 const NAVBAR = "Navbar"
-const NAVBAR_WIDTH_THIN = "5vw"
-const NAVBAR_WIDTH_WIDE = "20vw"
+const NAVBAR_WIDTH_THIN = "5%"
+const NAVBAR_WIDTH_WIDE = "20%"
 
 const SMALL_HOME = '\u2302'
 const WIDE_HOME = SMALL_HOME + ' HOME'
 const SMALL_ABOUT = '\u2139'
 const WIDE_ABOUT = SMALL_ABOUT + ' ABOUT'
-
 const DAY_LOGO = '\u{26C5}'
 const NIGHT_LOGO = '\u{1F312}'
 
@@ -29,22 +28,48 @@ export default function Navbar() {
 		dark: NIGHT_LOGO
 	})
 
+	function isNavbarVertical() {
+		const height: number = window.innerHeight
+		const width: number = window.innerWidth
+		const aspect: number = width / height
+		return aspect > 0.9
+	}
+
+	useLayoutEffect(() => {
+		function setNavbarPosition() {
+			const isVertical = isNavbarVertical()
+			document.getElementById(NAVBAR)!.style.top = isVertical ? "0%" : "90%"
+			document.getElementById(NAVBAR)!.style.right = isVertical ? "90%" : "0%"
+			document.getElementById(NAVBAR)!.style.flexDirection = isVertical ? "column" : "row"
+			document.getElementById(NAVBAR)!.style.height = isVertical ? "100%" : NAVBAR_WIDTH_THIN
+			document.getElementById(NAVBAR)!.style.minHeight = isVertical ? "100%" : NAVBAR_WIDTH_THIN
+			document.getElementById(NAVBAR)!.style.width = isVertical ? NAVBAR_WIDTH_THIN : "100%"
+		}
+
+		setNavbarPosition()
+		window.addEventListener('resize', setNavbarPosition)
+	}, [])
+
 	function widen() {
-		setTextState({
-			home: WIDE_HOME,
-			about: WIDE_ABOUT,
-			dark: textState.dark
-		})
-		document.getElementById(NAVBAR)!.style.width = NAVBAR_WIDTH_WIDE
+		if(isNavbarVertical()){
+			setTextState({
+				home: WIDE_HOME,
+				about: WIDE_ABOUT,
+				dark: textState.dark
+			})
+			document.getElementById(NAVBAR)!.style.width = NAVBAR_WIDTH_WIDE
+		}
 	}
 	
 	function shrink() {
-		setTextState({
-			home: SMALL_HOME,
-			about: SMALL_ABOUT,
-			dark: textState.dark
-		})
-		document.getElementById(NAVBAR)!.style.width = NAVBAR_WIDTH_THIN
+		if(isNavbarVertical()){
+			setTextState({
+				home: SMALL_HOME,
+				about: SMALL_ABOUT,
+				dark: textState.dark
+			})
+			document.getElementById(NAVBAR)!.style.width = NAVBAR_WIDTH_THIN
+		}
 	}
 
 	const updateNightMode = () => {
@@ -69,7 +94,7 @@ export default function Navbar() {
 		}
 	}
 
-	const updatePageState = (linkTo: string) => {
+	const updateCurrentPage = (linkTo: string) => {
 		setPageState({
 			currentPage: linkTo,
 			darkMode: pageState.darkMode
@@ -78,8 +103,8 @@ export default function Navbar() {
 
 	return (
 		<div className="Navbar" id="Navbar" onMouseOver={widen} onMouseLeave={shrink}>
-			<NavbarItem name={textState.home} linkTo="" onClick={updatePageState}/>
-			<NavbarItem name={textState.about} linkTo="about" onClick={updatePageState}/>
+			<NavbarItem name={textState.home} linkTo="" onClick={updateCurrentPage}/>
+			<NavbarItem name={textState.about} linkTo="about" onClick={updateCurrentPage}/>
 			<NavbarItem name={textState.dark} linkTo={pageState.currentPage} onClick={updateNightMode}/>
 		</div>
 	)
