@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import '../../App.css'
 import './Navbar.css'
 
+const NAVBAR_ITEM = "NavbarItem"
 const NAVBAR = "Navbar"
 const NAVBAR_WIDTH_THIN = "5%"
 const NAVBAR_WIDTH_WIDE = "20%"
@@ -38,12 +39,14 @@ export default function Navbar() {
 	useLayoutEffect(() => {
 		function setNavbarPosition() {
 			const isVertical = isNavbarVertical()
-			document.getElementById(NAVBAR)!.style.top = isVertical ? "0%" : "90%"
-			document.getElementById(NAVBAR)!.style.right = isVertical ? "90%" : "0%"
+			document.getElementById(NAVBAR)!.style.top = isVertical ? "0%" : "auto"
+			document.getElementById(NAVBAR)!.style.right = isVertical ? "auto" : "0%"
 			document.getElementById(NAVBAR)!.style.flexDirection = isVertical ? "column" : "row"
 			document.getElementById(NAVBAR)!.style.height = isVertical ? "100%" : NAVBAR_WIDTH_THIN
 			document.getElementById(NAVBAR)!.style.minHeight = isVertical ? "100%" : NAVBAR_WIDTH_THIN
 			document.getElementById(NAVBAR)!.style.width = isVertical ? NAVBAR_WIDTH_THIN : "100%"
+			document.getElementById(NAVBAR)!.style.marginInlineStart = isVertical ? "0" : "auto"
+			document.getElementById(NAVBAR)!.style.marginBlockStart = isVertical ? "auto" : "0"
 		}
 
 		setNavbarPosition()
@@ -102,7 +105,7 @@ export default function Navbar() {
 	}
 
 	return (
-		<div className="Navbar" id="Navbar" onMouseOver={widen} onMouseLeave={shrink}>
+		<div className={NAVBAR} id={NAVBAR} onMouseOver={widen} onMouseLeave={shrink}>
 			<NavbarItem name={textState.home} linkTo="" onClick={updateCurrentPage}/>
 			<NavbarItem name={textState.about} linkTo="about" onClick={updateCurrentPage}/>
 			<NavbarItem name={textState.dark} linkTo={pageState.currentPage} onClick={updateNightMode}/>
@@ -112,7 +115,7 @@ export default function Navbar() {
 
 function NavbarItem(props: {name: string, linkTo: string, onClick: (linkTo: string)=>void}) {
 	return (
-		<div className="NavbarItem" onClick={()=>{props.onClick(props.linkTo)}}>
+		<div className={NAVBAR_ITEM} onClick={()=>{props.onClick(props.linkTo)}}>
 			<Link to={props.linkTo}>{props.name}</Link>
 		</div>
 	)
