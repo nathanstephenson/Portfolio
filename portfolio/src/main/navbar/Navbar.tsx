@@ -45,8 +45,6 @@ export default function Navbar() {
 			document.getElementById(NAVBAR)!.style.height = isVertical ? "100%" : NAVBAR_WIDTH_THIN
 			document.getElementById(NAVBAR)!.style.minHeight = isVertical ? "100%" : NAVBAR_WIDTH_THIN
 			document.getElementById(NAVBAR)!.style.width = isVertical ? NAVBAR_WIDTH_THIN : "100%"
-			document.getElementById(NAVBAR)!.style.marginInlineStart = isVertical ? "0" : "auto"
-			document.getElementById(NAVBAR)!.style.marginBlockStart = isVertical ? "auto" : "0"
 		}
 
 		setNavbarPosition()

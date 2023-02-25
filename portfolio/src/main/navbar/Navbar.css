@@ -9,7 +9,7 @@
 	position: fixed;
 	top: 0vh;
 	bottom: 0vh;
-	left: 0vh;
+	left: 0vw;
 	width: var(--navbar-width-thin);
 	min-height: 100vh;
 	margin: 0;
@@ -23,10 +23,9 @@
 .NavbarItem {
 	display: block;
 	transition-duration: var(--transition-speed);
-	margin-top: var(--navbar-item-spacing);
+	margin-inline: var(--navbar-item-spacing);
 }
 
 .NavbarItem:last-of-type {
-    margin-top: auto;
-	margin-bottom: var(--navbar-item-spacing);
+	display: block;
 }
