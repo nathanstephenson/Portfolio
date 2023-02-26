@@ -7,6 +7,7 @@ const NAVBAR_ITEM = "NavbarItem"
 const NAVBAR = "Navbar"
 const NAVBAR_WIDTH_THIN = "5%"
 const NAVBAR_WIDTH_WIDE = "20%"
+const PAGE_MARGIN_NAVBAR_SIDE = Number.parseInt(NAVBAR_WIDTH_THIN.match('^[0-9]*') ? NAVBAR_WIDTH_THIN.match('^[0-9]*')![0] : "0")*2 + "%"
 
 const SMALL_HOME = '\u2302'
 const WIDE_HOME = SMALL_HOME + ' HOME'
@@ -45,6 +46,8 @@ export default function Navbar() {
 			document.getElementById(NAVBAR)!.style.height = isVertical ? "100%" : NAVBAR_WIDTH_THIN
 			document.getElementById(NAVBAR)!.style.minHeight = isVertical ? "100%" : NAVBAR_WIDTH_THIN
 			document.getElementById(NAVBAR)!.style.width = isVertical ? NAVBAR_WIDTH_THIN : "100%"
+			document.getElementById("App-main")!.style.marginLeft = isVertical ? PAGE_MARGIN_NAVBAR_SIDE : NAVBAR_WIDTH_THIN
+			document.getElementById("App-main")!.style.marginBottom = isVertical ? NAVBAR_WIDTH_THIN : PAGE_MARGIN_NAVBAR_SIDE
 		}
 
 		setNavbarPosition()
@@ -53,11 +56,15 @@ export default function Navbar() {
 
 	function widen() {
 		if(isNavbarVertical()){
-			setTextState({
-				home: WIDE_HOME,
-				about: WIDE_ABOUT,
-				dark: textState.dark
-			})
+			setTimeout(() => {
+				if(document.getElementById(NAVBAR)!.style.width === NAVBAR_WIDTH_WIDE){
+					setTextState({
+						home: WIDE_HOME,
+						about: WIDE_ABOUT,
+						dark: textState.dark
+					})
+				}
+			}, 50)
 			document.getElementById(NAVBAR)!.style.width = NAVBAR_WIDTH_WIDE
 		}
 	}
