@@ -1,4 +1,4 @@
-import initiald from '../../../images/initiald.jpg'
+import initiald from 'images/initiald.jpg'
 
 export default function Home() {
 	return (

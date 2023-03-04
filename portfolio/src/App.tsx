@@ -1,6 +1,6 @@
-import './App.css';
+import 'App.css';
 
-import Main from './main/Main'
+import Main from 'main/Main'
 
 function App() {
   return (
