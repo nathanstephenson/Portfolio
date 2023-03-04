@@ -42,6 +42,8 @@ export default function Navbar() {
 	useLayoutEffect(() => {
 		function setNavbarPosition() {
 			const isVertical = isNavbarVertical()
+			document.documentElement.style.setProperty("--navbar-item-spacing", "1" + (isVertical ? "vh" : "vw"))
+
 			document.getElementById(NAVBAR)!.style.bottom = isVertical ? "0vh" : "auto"
 			document.getElementById(NAVBAR)!.style.right = isVertical ? "auto" : "0vw"
 			document.getElementById(NAVBAR)!.style.flexDirection = isVertical ? "column" : "row"
@@ -50,6 +52,13 @@ export default function Navbar() {
 			document.getElementById(NAVBAR)!.style.minWidth = isVertical ? NAVBAR_WIDTH_THIN : "100%"
 			document.getElementById(APP_INCLUDING_FOOTER)!.style.marginLeft = isVertical ? PAGE_MARGIN_NAVBAR_SIDE : "0vw"
 			document.getElementById(APP_INCLUDING_FOOTER)!.style.marginTop = isVertical ? "0vh" : PAGE_MARGIN_NAVBAR_SIDE
+
+			//Correctly position day/night option in navbar
+			const navbarItems = document.getElementsByClassName("NavbarItem")!
+			console.log(navbarItems.item(navbarItems.length - 1))
+			const lastNavbarItemId = navbarItems.item(navbarItems.length - 1)!.getAttribute("id")!
+			document.getElementById(lastNavbarItemId)!.style.marginInlineStart = isVertical ? "var(--navbar-item-spacing)" : "auto"
+			document.getElementById(lastNavbarItemId)!.style.marginBlockStart = isVertical ? "auto" : "var(--navbar-item-spacing)"
 		}
 
 		setNavbarPosition()
@@ -111,6 +120,7 @@ export default function Navbar() {
 			currentPage: linkTo,
 			darkMode: pageState.darkMode
 		})
+		document.documentElement.scrollTop = 0;
 	}
 
 	return (
@@ -124,7 +134,7 @@ export default function Navbar() {
 
 function NavbarItem(props: {name: string, linkTo: string, onClick: (linkTo: string)=>void}) {
 	return (
-		<div className={NAVBAR_ITEM} onClick={()=>{props.onClick(props.linkTo)}}>
+		<div id={Math.random().toString()} className={NAVBAR_ITEM} onClick={()=>{props.onClick(props.linkTo)}}>
 			<Link to={props.linkTo}>{props.name}</Link>
 		</div>
 	)
