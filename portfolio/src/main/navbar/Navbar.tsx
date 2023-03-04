@@ -3,15 +3,17 @@ import { Link } from 'react-router-dom'
 import '../../App.css'
 import './Navbar.css'
 
+const APP_INCLUDING_FOOTER = "App-including-footer"
+
 const NAVBAR_ITEM = "NavbarItem"
 const NAVBAR = "Navbar"
 const NAVBAR_WIDTH_THIN = "5%"
 const NAVBAR_WIDTH_WIDE = "20%"
-const PAGE_MARGIN_NAVBAR_SIDE = Number.parseInt(NAVBAR_WIDTH_THIN.match('^[0-9]*') ? NAVBAR_WIDTH_THIN.match('^[0-9]*')![0] : "0")*2 + "%"
+const PAGE_MARGIN_NAVBAR_SIDE = Number.parseInt(NAVBAR_WIDTH_THIN.match('^[0-9]*') ? NAVBAR_WIDTH_THIN.match('^[0-9]*')![0] : "0") + "%"
 
-const SMALL_HOME = '\u2302'
+const SMALL_HOME = '\u{1F3E0}'
 const WIDE_HOME = SMALL_HOME + ' HOME'
-const SMALL_ABOUT = '\u2139'
+const SMALL_ABOUT = '\u{1F4D6}'
 const WIDE_ABOUT = SMALL_ABOUT + ' ABOUT'
 const DAY_LOGO = '\u{26C5}'
 const NIGHT_LOGO = '\u{1F312}'
@@ -40,14 +42,14 @@ export default function Navbar() {
 	useLayoutEffect(() => {
 		function setNavbarPosition() {
 			const isVertical = isNavbarVertical()
-			document.getElementById(NAVBAR)!.style.top = isVertical ? "0%" : "auto"
-			document.getElementById(NAVBAR)!.style.right = isVertical ? "auto" : "0%"
+			document.getElementById(NAVBAR)!.style.bottom = isVertical ? "0vh" : "auto"
+			document.getElementById(NAVBAR)!.style.right = isVertical ? "auto" : "0vw"
 			document.getElementById(NAVBAR)!.style.flexDirection = isVertical ? "column" : "row"
 			document.getElementById(NAVBAR)!.style.height = isVertical ? "100%" : NAVBAR_WIDTH_THIN
 			document.getElementById(NAVBAR)!.style.minHeight = isVertical ? "100%" : NAVBAR_WIDTH_THIN
 			document.getElementById(NAVBAR)!.style.width = isVertical ? NAVBAR_WIDTH_THIN : "100%"
-			document.getElementById("App-main")!.style.marginLeft = isVertical ? PAGE_MARGIN_NAVBAR_SIDE : NAVBAR_WIDTH_THIN
-			document.getElementById("App-main")!.style.marginBottom = isVertical ? NAVBAR_WIDTH_THIN : PAGE_MARGIN_NAVBAR_SIDE
+			document.getElementById(APP_INCLUDING_FOOTER)!.style.marginLeft = isVertical ? PAGE_MARGIN_NAVBAR_SIDE : "0vw"
+			document.getElementById(APP_INCLUDING_FOOTER)!.style.marginTop = isVertical ? "0vh" : PAGE_MARGIN_NAVBAR_SIDE
 		}
 
 		setNavbarPosition()

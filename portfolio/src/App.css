@@ -8,6 +8,8 @@
 	--background-colour-primary: var(--background-colour-primary-dark);
 	--background-colour-secondary: var(--background-colour-secondary-dark);
 	--text-colour: var(--background-colour-primary-light);
+
+	--font-size: calc(10px + 2vmin);
 }
 
 .App {
@@ -33,12 +35,11 @@ a:active { text-decoration: none; }
 
 .App-header {
   background-color: var(--background-colour-primary);
-  min-height: 100vh;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: var(--font-size);
   color: var(--text-colour);
 }
 
@@ -53,6 +54,13 @@ a:active { text-decoration: none; }
 
 .App-main {
 	margin: var(--navbar-width-thin);
+	min-height: 100vh;
+}
+
+.App-including-footer {
+	flex-direction: column;
+	bottom: 0%;
+	width: 100%;
 }
 
 img {
