@@ -13,3 +13,7 @@
 	transition-duration: var(--transition-speed);
 	padding: calc(var(--font-size) / 2);
 }	
+
+.Footer-row {
+	display: inline-block;
+}

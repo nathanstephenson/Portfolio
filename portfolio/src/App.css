@@ -67,4 +67,9 @@ a:active { text-decoration: none; }
 img {
 	max-width: 100%;
 	height: auto;
+	vertical-align: middle;
+}
+
+svg {
+	vertical-align: middle;
 }
