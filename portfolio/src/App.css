@@ -1,15 +1,16 @@
 :root {
 	--transition-speed: 50ms;
 
-	--background-colour-primary-dark: #282c34;
-	--background-colour-secondary-dark: #585886;
-	--background-colour-primary-light: #F8F7FF;
-	--background-colour-secondary-light: #ffeedd;
+	--background-colour-primary-dark: #242038;
+	--background-colour-secondary-dark: #8D86C9;
+	--background-colour-primary-light: #F7ECE1;
+	--background-colour-secondary-light: #EB9486;
 	--background-colour-primary: var(--background-colour-primary-dark);
 	--background-colour-secondary: var(--background-colour-secondary-dark);
+	--background-colour-footer: var(--background-colour-secondary);
 	--text-colour: var(--background-colour-primary-light);
 
-	--font-size: calc(10px + 2vmin);
+	--font-size: calc(4px + 2vmin);
 }
 
 .App {

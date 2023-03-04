@@ -47,7 +47,7 @@ export default function Navbar() {
 			document.getElementById(NAVBAR)!.style.flexDirection = isVertical ? "column" : "row"
 			document.getElementById(NAVBAR)!.style.height = isVertical ? "100%" : NAVBAR_WIDTH_THIN
 			document.getElementById(NAVBAR)!.style.minHeight = isVertical ? "100%" : NAVBAR_WIDTH_THIN
-			document.getElementById(NAVBAR)!.style.width = isVertical ? NAVBAR_WIDTH_THIN : "100%"
+			document.getElementById(NAVBAR)!.style.minWidth = isVertical ? NAVBAR_WIDTH_THIN : "100%"
 			document.getElementById(APP_INCLUDING_FOOTER)!.style.marginLeft = isVertical ? PAGE_MARGIN_NAVBAR_SIDE : "0vw"
 			document.getElementById(APP_INCLUDING_FOOTER)!.style.marginTop = isVertical ? "0vh" : PAGE_MARGIN_NAVBAR_SIDE
 		}
@@ -96,10 +96,12 @@ export default function Navbar() {
 		if(darkMode){
 			document.documentElement.style.setProperty('--background-colour-primary', 'var(--background-colour-primary-dark)')
 			document.documentElement.style.setProperty('--background-colour-secondary', 'var(--background-colour-secondary-dark)')
+			// document.documentElement.style.setProperty('--background-colour-footer', 'var(--background-colour-footer-dark)')
 			document.documentElement.style.setProperty('--text-colour', 'var(--background-colour-primary-light)')
 		} else {
 			document.documentElement.style.setProperty('--background-colour-primary', 'var(--background-colour-primary-light)')
 			document.documentElement.style.setProperty('--background-colour-secondary', 'var(--background-colour-secondary-light)')
+			// document.documentElement.style.setProperty('--background-colour-footer', 'var(--background-colour-footer-light)')
 			document.documentElement.style.setProperty('--text-colour', 'var(--background-colour-primary-dark)')
 		}
 	}

@@ -5,9 +5,11 @@
 .Footer {
 	display: flex;
 	flex-direction: column;
-	background: var(--background-colour-secondary);
+	background: var(--background-colour-footer);
 	margin-bottom: 0%;
 	list-style: none;
 	align-items: center;
 	font-size: var(--footer-font-size);
+	transition-duration: var(--transition-speed);
+	padding: calc(var(--font-size) / 2);
 }	
