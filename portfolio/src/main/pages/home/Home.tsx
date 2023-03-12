@@ -6,7 +6,9 @@ export default function Home() {
 	return (
 		<>
 			<Welcome/>
-			<img src={initiald} alt='Initial D'/>
+			<ContentBox>
+				<img src={initiald} alt='Initial D'/>
+			</ContentBox>
 			<ContentBox>
 				<p>Hi</p>
 				<p>

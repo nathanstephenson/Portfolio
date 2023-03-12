@@ -54,7 +54,6 @@ a:active { text-decoration: none; }
 }
 
 .App-main {
-	margin: var(--navbar-width-thin);
 	min-height: 100vh;
 }
 
@@ -62,6 +61,7 @@ a:active { text-decoration: none; }
 	flex-direction: column;
 	bottom: 0%;
 	width: 100%;
+	margin: 0;
 }
 
 img {

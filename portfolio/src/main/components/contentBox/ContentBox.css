@@ -8,6 +8,7 @@
 	visibility: hidden;
 	transition: opacity var(--box-transition-speed) ease-out, transform calc(2* var(--box-transition-speed)) ease-out;
 	will-change: opacity, visibility;
+	margin: var(--navbar-width-thin);
   }
 
   .ContentBox.is-visible {
