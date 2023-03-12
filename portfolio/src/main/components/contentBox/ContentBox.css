@@ -1,0 +1,17 @@
+:root {
+	--box-transition-speed: calc(4 * var(--transition-speed))
+}
+
+.ContentBox {
+	opacity: 0;
+	transform: translateY(10vh);
+	visibility: hidden;
+	transition: opacity var(--box-transition-speed) ease-out, transform calc(2* var(--box-transition-speed)) ease-out;
+	will-change: opacity, visibility;
+  }
+
+  .ContentBox.is-visible {
+	opacity: 1;
+	transform: none;
+	visibility: visible;
+  }

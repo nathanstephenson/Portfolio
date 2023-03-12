@@ -1,5 +1,6 @@
 import { useLayoutEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+
 import 'App.css'
 import './Navbar.css'
 
@@ -43,7 +44,6 @@ export default function Navbar() {
 		function setNavbarPosition() {
 			const isVertical = isNavbarVertical()
 			document.documentElement.style.setProperty("--navbar-item-spacing", "1" + (isVertical ? "vh" : "vw"))
-
 			document.getElementById(NAVBAR)!.style.bottom = isVertical ? "0vh" : "auto"
 			document.getElementById(NAVBAR)!.style.right = isVertical ? "auto" : "0vw"
 			document.getElementById(NAVBAR)!.style.flexDirection = isVertical ? "column" : "row"
@@ -55,7 +55,6 @@ export default function Navbar() {
 
 			//Correctly position day/night option in navbar
 			const navbarItems = document.getElementsByClassName("NavbarItem")!
-			console.log(navbarItems.item(navbarItems.length - 1))
 			const lastNavbarItemId = navbarItems.item(navbarItems.length - 1)!.getAttribute("id")!
 			document.getElementById(lastNavbarItemId)!.style.marginInlineStart = isVertical ? "var(--navbar-item-spacing)" : "auto"
 			document.getElementById(lastNavbarItemId)!.style.marginBlockStart = isVertical ? "auto" : "var(--navbar-item-spacing)"
@@ -105,12 +104,10 @@ export default function Navbar() {
 		if(darkMode){
 			document.documentElement.style.setProperty('--background-colour-primary', 'var(--background-colour-primary-dark)')
 			document.documentElement.style.setProperty('--background-colour-secondary', 'var(--background-colour-secondary-dark)')
-			// document.documentElement.style.setProperty('--background-colour-footer', 'var(--background-colour-footer-dark)')
 			document.documentElement.style.setProperty('--text-colour', 'var(--background-colour-primary-light)')
 		} else {
 			document.documentElement.style.setProperty('--background-colour-primary', 'var(--background-colour-primary-light)')
 			document.documentElement.style.setProperty('--background-colour-secondary', 'var(--background-colour-secondary-light)')
-			// document.documentElement.style.setProperty('--background-colour-footer', 'var(--background-colour-footer-light)')
 			document.documentElement.style.setProperty('--text-colour', 'var(--background-colour-primary-dark)')
 		}
 	}

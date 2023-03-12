@@ -73,3 +73,7 @@ img {
 svg {
 	vertical-align: middle;
 }
+
+progress {
+	position: fixed;
+}

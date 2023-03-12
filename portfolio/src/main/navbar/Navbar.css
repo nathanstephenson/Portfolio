@@ -18,6 +18,7 @@
 	align-items: center;
 	vertical-align: middle;
 	transition-duration: var(--transition-speed);
+	z-index : 1;
 }
 
 .NavbarItem {
