@@ -4,6 +4,7 @@ import Navbar from './navbar/Navbar'
 import Footer from './footer/Footer'
 import About from './pages/about/About'
 import Home from './pages/home/Home'
+import Projects from './pages/projects/Projects'
 
 export default function Main() {
 	return(
@@ -14,6 +15,7 @@ export default function Main() {
 					<Routes>
 						<Route path="" element={<Home/>} />
 						<Route path="about" element={<About/>} />
+						<Route path="projects" element={<Projects/>} />
 					</Routes>
 				</div>
 				<Footer/>

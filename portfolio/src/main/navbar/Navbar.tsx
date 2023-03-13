@@ -17,6 +17,8 @@ const SMALL_HOME = '\u{1F3E0}'
 const WIDE_HOME = SMALL_HOME + ' HOME'
 const SMALL_ABOUT = '\u{1F4D6}'
 const WIDE_ABOUT = SMALL_ABOUT + ' ABOUT'
+const SMALL_PROJECTS = '\u{1F4BC}'
+const WIDE_PROJECTS = SMALL_ABOUT + ' PROJECTS'
 const DAY_LOGO = '\u{26C5}'
 const NIGHT_LOGO = '\u{1F312}'
 
@@ -31,6 +33,7 @@ export default function Navbar() {
 	var [textState, setTextState] = useState({
 		home: SMALL_HOME,
 		about: SMALL_ABOUT,
+		projects: SMALL_PROJECTS,
 		dark: NIGHT_LOGO
 	})
 
@@ -72,6 +75,7 @@ export default function Navbar() {
 					setTextState({
 						home: WIDE_HOME,
 						about: WIDE_ABOUT,
+						projects: WIDE_PROJECTS,
 						dark: textState.dark
 					})
 				}
@@ -86,6 +90,7 @@ export default function Navbar() {
 			setTextState({
 				home: SMALL_HOME,
 				about: SMALL_ABOUT,
+				projects: SMALL_PROJECTS,
 				dark: textState.dark
 			})
 			document.getElementById(NAVBAR)!.style.width = NAVBAR_WIDTH_THIN
@@ -102,6 +107,7 @@ export default function Navbar() {
 		setTextState({
 			home: textState.home,
 			about: textState.about,
+			projects: textState.projects,
 			dark: darkMode ? NIGHT_LOGO : DAY_LOGO
 		})
 		if(darkMode){
@@ -127,6 +133,7 @@ export default function Navbar() {
 		<div className={NAVBAR} id={NAVBAR} onMouseOver={widen} onMouseLeave={shrink}>
 			<NavbarItem name={textState.home} linkTo="" onClick={updateCurrentPage}/>
 			<NavbarItem name={textState.about} linkTo="about" onClick={updateCurrentPage}/>
+			<NavbarItem name={textState.about} linkTo="projects" onClick={updateCurrentPage}/>
 			<NavbarItem name={textState.dark} linkTo={pageState.currentPage} onClick={updateNightMode}/>
 		</div>
 	)
