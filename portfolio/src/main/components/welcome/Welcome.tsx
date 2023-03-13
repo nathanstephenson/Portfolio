@@ -5,7 +5,6 @@ import './Welcome.css'
 const WELCOME = "Welcome"
 
 export default function Welcome(props: any) {
-	const domRef = useRef(null);
 
 	useLayoutEffect(() => {
 		function onScroll() {
@@ -28,7 +27,7 @@ export default function Welcome(props: any) {
 	}, []);
 
 	return (
-		<div id={WELCOME} className={WELCOME} ref={domRef}>
+		<div id={WELCOME} className={WELCOME}>
 			Welcome
 		</div>
 	)

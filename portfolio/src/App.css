@@ -1,8 +1,8 @@
 :root {
 	--transition-speed: 50ms;
 
-	--background-colour-primary-dark: #242038;
-	--background-colour-secondary-dark: #8D86C9;
+	--background-colour-primary-dark: #2C2C34;
+	--background-colour-secondary-dark: #C97064;
 	--background-colour-primary-light: #F7ECE1;
 	--background-colour-secondary-light: #EB9486;
 	--background-colour-primary: var(--background-colour-primary-dark);
@@ -11,6 +11,7 @@
 	--text-colour: var(--background-colour-primary-light);
 
 	--font-size: calc(4px + 2vmin);
+	--main-blur-amount: 0px;
 }
 
 .App {
@@ -55,6 +56,10 @@ a:active { text-decoration: none; }
 
 .App-main {
 	min-height: 100vh;
+    -webkit-filter: blur(var(--main-blur-amount));
+    -moz-filter: blur(var(--main-blur-amount));
+    -o-filter: blur(var(--main-blur-amount));
+    -ms-filter: blur(var(--main-blur-amount));
 }
 
 .App-including-footer {

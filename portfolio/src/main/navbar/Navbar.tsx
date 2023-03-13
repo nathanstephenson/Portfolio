@@ -5,6 +5,7 @@ import 'App.css'
 import './Navbar.css'
 
 const APP_INCLUDING_FOOTER = "App-including-footer"
+const BLUR_AMOUNT = "10px"
 
 const NAVBAR_ITEM = "NavbarItem"
 const NAVBAR = "Navbar"
@@ -76,6 +77,7 @@ export default function Navbar() {
 				}
 			}, 50)
 			document.getElementById(NAVBAR)!.style.width = NAVBAR_WIDTH_WIDE
+			document.documentElement.style.setProperty("--main-blur-amount", BLUR_AMOUNT)
 		}
 	}
 	
@@ -87,6 +89,7 @@ export default function Navbar() {
 				dark: textState.dark
 			})
 			document.getElementById(NAVBAR)!.style.width = NAVBAR_WIDTH_THIN
+			document.documentElement.style.setProperty("--main-blur-amount", "0px")
 		}
 	}
 
