@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 import 'App.css'
 import './Navbar.css'
+import { getIntValue } from 'Utils'
 
 const APP_INCLUDING_FOOTER = "App-including-footer"
 const BLUR_AMOUNT = "10px"
@@ -11,14 +12,14 @@ const NAVBAR_ITEM = "NavbarItem"
 const NAVBAR = "Navbar"
 const NAVBAR_WIDTH_THIN = "5%"
 const NAVBAR_WIDTH_WIDE = "20%"
-const PAGE_MARGIN_NAVBAR_SIDE = Number.parseInt(NAVBAR_WIDTH_THIN.match('^[0-9]*') ? NAVBAR_WIDTH_THIN.match('^[0-9]*')![0] : "0") + "%"
+const PAGE_MARGIN_NAVBAR_SIDE = getIntValue(NAVBAR_WIDTH_THIN) + "%"
 
 const SMALL_HOME = '\u{1F3E0}'
 const WIDE_HOME = SMALL_HOME + ' HOME'
 const SMALL_ABOUT = '\u{1F4D6}'
 const WIDE_ABOUT = SMALL_ABOUT + ' ABOUT'
 const SMALL_PROJECTS = '\u{1F4BC}'
-const WIDE_PROJECTS = SMALL_ABOUT + ' PROJECTS'
+const WIDE_PROJECTS = SMALL_PROJECTS + ' PROJECTS'
 const DAY_LOGO = '\u{26C5}'
 const NIGHT_LOGO = '\u{1F312}'
 
@@ -133,7 +134,7 @@ export default function Navbar() {
 		<div className={NAVBAR} id={NAVBAR} onMouseOver={widen} onMouseLeave={shrink}>
 			<NavbarItem name={textState.home} linkTo="" onClick={updateCurrentPage}/>
 			<NavbarItem name={textState.about} linkTo="about" onClick={updateCurrentPage}/>
-			<NavbarItem name={textState.about} linkTo="projects" onClick={updateCurrentPage}/>
+			<NavbarItem name={textState.projects} linkTo="projects" onClick={updateCurrentPage}/>
 			<NavbarItem name={textState.dark} linkTo={pageState.currentPage} onClick={updateNightMode}/>
 		</div>
 	)
