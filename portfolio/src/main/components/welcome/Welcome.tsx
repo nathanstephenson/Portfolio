@@ -8,21 +8,13 @@ const WELCOME_TEXT = "Welcome-text";
 const PARALLAX_MODIFIER = 0.8;
 
 export default function Welcome(props: any) {
-	document.documentElement.style.setProperty('--parallax-modifier', PARALLAX_MODIFIER.toString())
-
 	useLayoutEffect(() => {
-		function render() {
-			const welcome = document.getElementById(WELCOME)!
-			const height = Number.parseInt(welcome.style.minHeight!.match('^[0-9]*')?.[0]!)
-			const welcomeHeight = (height / 100) * window.innerHeight;
-			const scrollPercent = calculateSrollPercent(welcomeHeight, PARALLAX_MODIFIER)
-			welcome.style.minHeight = '100vh'
-			setContentPosition(scrollPercent);
-			const welcome_content = document.getElementById(WELCOME_CONTENT)!
-			console.log(welcome_content.style.transform)
-		}
+		document.documentElement.style.setProperty('--parallax-modifier', PARALLAX_MODIFIER.toString())
 	  	window.addEventListener('scroll', render)
 		render()
+		return () => {
+			window.removeEventListener('scroll', render)
+		}
 	}, []);
 
 	return (
@@ -32,6 +24,17 @@ export default function Welcome(props: any) {
 			</div>
 		</div>
 	)
+}
+
+function render() {
+	const welcome = document.getElementById(WELCOME)!
+	const height = Number.parseInt(welcome.style.minHeight!.match('^[0-9]*')?.[0]!)
+	const welcomeHeight = (height / 100) * window.innerHeight;
+	const scrollPercent = calculateSrollPercent(welcomeHeight, PARALLAX_MODIFIER)
+	welcome.style.minHeight = '100vh'
+	setContentPosition(scrollPercent);
+	const welcome_content = document.getElementById(WELCOME_CONTENT)!
+	console.log(welcome_content.style.transform)
 }
 
 function setContentPosition(scrollPercent: number) {

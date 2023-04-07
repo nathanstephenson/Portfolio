@@ -1,5 +1,8 @@
 :root {
-	--box-transition-speed: calc(4 * var(--transition-speed))
+	--box-transition-speed: calc(4 * var(--transition-speed));
+	--side-padding: 5%;
+	--border-radius: 1.5vh;
+	--border-colour: 1px solid #000000;
 }
 
 .ContentBox {
@@ -8,7 +11,13 @@
 	visibility: hidden;
 	transition: opacity var(--box-transition-speed) ease-out, transform calc(2* var(--box-transition-speed)) ease-out;
 	will-change: opacity, visibility;
-	margin: var(--navbar-width-thin);
+	padding-left: var(--side-padding);
+	padding-right: var(--side-padding);
+	margin-top: var(--navbar-width-thin);
+	border-start-start-radius: var(--border-radius);
+    border-start-end-radius: var(--border-radius);
+    border-end-start-radius: var(--border-radius);
+    border-end-end-radius: var(--border-radius);
   }
 
   .ContentBox.is-visible {

@@ -12,6 +12,7 @@
 	font-size: var(--footer-font-size);
 	transition-duration: var(--transition-speed);
 	padding: calc(var(--font-size) / 2);
+	width: 100%;
 }	
 
 .Footer-row {

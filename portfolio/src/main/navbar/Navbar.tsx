@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import 'App.css'
 import './Navbar.css'
 import { getIntValue } from 'Utils'
+import { MOON, SUN, SQUARE as HOME, ABOUT, PROJECTS } from 'images/svg'
 
 const APP_INCLUDING_FOOTER = "App-including-footer"
 const BLUR_AMOUNT = "10px"
@@ -14,19 +15,16 @@ const NAVBAR_WIDTH_THIN = "5%"
 const NAVBAR_WIDTH_WIDE = "20%"
 const PAGE_MARGIN_NAVBAR_SIDE = getIntValue(NAVBAR_WIDTH_THIN) + "%"
 
-const SMALL_HOME = '\u{1F3E0}'
-const WIDE_HOME = SMALL_HOME + ' HOME'
-const SMALL_ABOUT = '\u{1F4D6}'
-const WIDE_ABOUT = SMALL_ABOUT + ' ABOUT'
-const SMALL_PROJECTS = '\u{1F4BC}'
-const WIDE_PROJECTS = SMALL_PROJECTS + ' PROJECTS'
-const DAY_LOGO = '\u{26C5}'
-const NIGHT_LOGO = '\u{1F312}'
+const SMALL_HOME = HOME
+const WIDE_HOME = <>HOME</>
+const SMALL_ABOUT = ABOUT
+const WIDE_ABOUT = <>ABOUT</>
+const SMALL_PROJECTS = PROJECTS
+const WIDE_PROJECTS = <>PROJECTS</>
+const DAY_LOGO = SUN
+const NIGHT_LOGO = MOON
 
 export default function Navbar() {
-	document.documentElement.style.setProperty("--navbar-width-thin", NAVBAR_WIDTH_THIN)
-	document.documentElement.style.setProperty("--navbar-width-wide", NAVBAR_WIDTH_WIDE)
-
 	var [pageState, setPageState] = useState({
 		currentPage: "",
 		darkMode: true
@@ -37,33 +35,11 @@ export default function Navbar() {
 		projects: SMALL_PROJECTS,
 		dark: NIGHT_LOGO
 	})
-
-	function isNavbarVertical() {
-		const height: number = window.innerHeight
-		const width: number = window.innerWidth
-		const aspect: number = width / height
-		return aspect > 0.9
-	}
+	const navbarWidthThin = getNavbarWidthThin()
 
 	useLayoutEffect(() => {
-		function setNavbarPosition() {
-			const isVertical = isNavbarVertical()
-			document.documentElement.style.setProperty("--navbar-item-spacing", "1" + (isVertical ? "vh" : "vw"))
-			document.getElementById(NAVBAR)!.style.bottom = isVertical ? "0vh" : "auto"
-			document.getElementById(NAVBAR)!.style.right = isVertical ? "auto" : "0vw"
-			document.getElementById(NAVBAR)!.style.flexDirection = isVertical ? "column" : "row"
-			document.getElementById(NAVBAR)!.style.height = isVertical ? "100%" : NAVBAR_WIDTH_THIN
-			document.getElementById(NAVBAR)!.style.minHeight = isVertical ? "100%" : NAVBAR_WIDTH_THIN
-			document.getElementById(NAVBAR)!.style.minWidth = isVertical ? NAVBAR_WIDTH_THIN : "100%"
-			document.getElementById(APP_INCLUDING_FOOTER)!.style.marginLeft = isVertical ? PAGE_MARGIN_NAVBAR_SIDE : "0vw"
-			document.getElementById(APP_INCLUDING_FOOTER)!.style.marginTop = isVertical ? "0vh" : PAGE_MARGIN_NAVBAR_SIDE
-
-			//Correctly position day/night option in navbar
-			const navbarItems = document.getElementsByClassName("NavbarItem")!
-			const lastNavbarItemId = navbarItems.item(navbarItems.length - 1)!.getAttribute("id")!
-			document.getElementById(lastNavbarItemId)!.style.marginInlineStart = isVertical ? "var(--navbar-item-spacing)" : "auto"
-			document.getElementById(lastNavbarItemId)!.style.marginBlockStart = isVertical ? "auto" : "var(--navbar-item-spacing)"
-		}
+		document.documentElement.style.setProperty("--navbar-width-thin", NAVBAR_WIDTH_THIN)
+		document.documentElement.style.setProperty("--navbar-width-wide", NAVBAR_WIDTH_WIDE)
 
 		setNavbarPosition()
 		window.addEventListener('resize', setNavbarPosition)
@@ -94,7 +70,7 @@ export default function Navbar() {
 				projects: SMALL_PROJECTS,
 				dark: textState.dark
 			})
-			document.getElementById(NAVBAR)!.style.width = NAVBAR_WIDTH_THIN
+			document.getElementById(NAVBAR)!.style.width = navbarWidthThin
 			document.documentElement.style.setProperty("--main-blur-amount", "0px")
 		}
 	}
@@ -114,11 +90,13 @@ export default function Navbar() {
 		if(darkMode){
 			document.documentElement.style.setProperty('--background-colour-primary', 'var(--background-colour-primary-dark)')
 			document.documentElement.style.setProperty('--background-colour-secondary', 'var(--background-colour-secondary-dark)')
-			document.documentElement.style.setProperty('--text-colour', 'var(--background-colour-primary-light)')
+			document.documentElement.style.setProperty('--text-colour-primary', 'var(--background-colour-primary-light)')
+			document.documentElement.style.setProperty('--text-colour-secondary', 'var(--background-colour-primary-dark)')
 		} else {
 			document.documentElement.style.setProperty('--background-colour-primary', 'var(--background-colour-primary-light)')
 			document.documentElement.style.setProperty('--background-colour-secondary', 'var(--background-colour-secondary-light)')
-			document.documentElement.style.setProperty('--text-colour', 'var(--background-colour-primary-dark)')
+			document.documentElement.style.setProperty('--text-colour-primary', 'var(--background-colour-primary-dark)')
+			document.documentElement.style.setProperty('--text-colour-secondary', 'var(--background-colour-primary-light)')
 		}
 	}
 
@@ -140,10 +118,46 @@ export default function Navbar() {
 	)
 }
 
-function NavbarItem(props: {name: string, linkTo: string, onClick: (linkTo: string)=>void}) {
+function NavbarItem(props: {name: JSX.Element, linkTo: string, onClick: (linkTo: string)=>void}) {
 	return (
 		<div id={Math.random().toString()} className={NAVBAR_ITEM} onClick={()=>{props.onClick(props.linkTo)}}>
 			<Link to={props.linkTo}>{props.name}</Link>
 		</div>
 	)
+}
+function setNavbarPosition() {
+	const isVertical : boolean = isNavbarVertical()
+	const navbarWidthThin : string = getNavbarWidthThin()
+	document.documentElement.style.setProperty("--navbar-item-spacing", "1" + (isVertical ? "vh" : "vw"))
+	document.getElementById(NAVBAR)!.style.bottom = isVertical ? "0vh" : "auto"
+	document.getElementById(NAVBAR)!.style.right = isVertical ? "auto" : "0vw"
+	document.getElementById(NAVBAR)!.style.flexDirection = isVertical ? "column" : "row"
+	document.getElementById(NAVBAR)!.style.height = isVertical ? "100%" : navbarWidthThin
+	document.getElementById(NAVBAR)!.style.minHeight = isVertical ? "100%" : navbarWidthThin
+	document.getElementById(NAVBAR)!.style.minWidth = isVertical ? navbarWidthThin : "100%"
+	document.getElementById(APP_INCLUDING_FOOTER)!.style.marginLeft = isVertical ? PAGE_MARGIN_NAVBAR_SIDE : "0vw"
+	document.getElementById(APP_INCLUDING_FOOTER)!.style.marginTop = isVertical ? "0vh" : PAGE_MARGIN_NAVBAR_SIDE
+
+	//Correctly position day/night option in navbar
+	const navbarItems = document.getElementsByClassName("NavbarItem")!
+	const lastNavbarItemId = navbarItems.item(navbarItems.length - 1)!.getAttribute("id")!
+	document.getElementById(lastNavbarItemId)!.style.marginInlineStart = isVertical ? "var(--navbar-item-spacing)" : "auto"
+	document.getElementById(lastNavbarItemId)!.style.marginBlockStart = isVertical ? "auto" : "var(--navbar-item-spacing)"
+}
+
+function getNavbarWidthThin(){
+	const amount = getIntValue(NAVBAR_WIDTH_THIN) * getAspectRatio()
+	return amount + "%"
+}
+
+function isNavbarVertical() : boolean {
+	const aspect: number = getAspectRatio()
+	return aspect > 0.9
+}
+
+function getAspectRatio() : number {
+	const height: number = window.innerHeight
+	const width: number = window.innerWidth
+	const aspect: number = width / height
+	return aspect
 }

@@ -8,7 +8,8 @@
 	--background-colour-primary: var(--background-colour-primary-dark);
 	--background-colour-secondary: var(--background-colour-secondary-dark);
 	--background-colour-footer: var(--background-colour-secondary);
-	--text-colour: var(--background-colour-primary-light);
+	--text-colour-primary: var(--background-colour-primary-light);
+	--text-colour-secondary: var(--background-colour-primary-light);
 
 	--font-size: calc(4px + 2vmin);
 	--main-blur-amount: 0px;
@@ -19,8 +20,8 @@
   transition-duration: var(--transition-speed);
 }
 
-a:link { text-decoration: none; color: var(--text-colour); }
-a:visited { text-decoration: none; color: var(--text-colour); }
+a:link { text-decoration: none; color: var(--text-colour-primary); }
+a:visited { text-decoration: none; color: var(--text-colour-primary); }
 a:hover { text-decoration: none; }
 a:active { text-decoration: none; }
 
@@ -42,7 +43,7 @@ a:active { text-decoration: none; }
   align-items: center;
   justify-content: center;
   font-size: var(--font-size);
-  color: var(--text-colour);
+  color: var(--text-colour-primary);
 }
 
 @keyframes App-logo-spin {
@@ -60,10 +61,17 @@ a:active { text-decoration: none; }
     -moz-filter: blur(var(--main-blur-amount));
     -o-filter: blur(var(--main-blur-amount));
     -ms-filter: blur(var(--main-blur-amount));
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
 }
 
 .App-including-footer {
+	display: flex;
 	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 	bottom: 0%;
 	width: 100%;
 	margin: 0;
