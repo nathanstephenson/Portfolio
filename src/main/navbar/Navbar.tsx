@@ -13,7 +13,6 @@ const NAVBAR_ITEM = "NavbarItem"
 const NAVBAR = "Navbar"
 const NAVBAR_WIDTH_THIN = "5%"
 const NAVBAR_WIDTH_WIDE = "20%"
-const PAGE_MARGIN_NAVBAR_SIDE = getIntValue(NAVBAR_WIDTH_THIN) + "%"
 
 const SMALL_HOME = HOME
 const WIDE_HOME = <>HOME</>
@@ -21,8 +20,8 @@ const SMALL_ABOUT = ABOUT
 const WIDE_ABOUT = <>ABOUT</>
 const SMALL_PROJECTS = PROJECTS
 const WIDE_PROJECTS = <>PROJECTS</>
-const DAY_LOGO = SUN
-const NIGHT_LOGO = MOON
+const DAY_LOGO = MOON
+const NIGHT_LOGO = SUN
 
 export default function Navbar() {
 	var [pageState, setPageState] = useState({
@@ -38,9 +37,6 @@ export default function Navbar() {
 	const navbarWidthThin = getNavbarWidthThin()
 
 	useLayoutEffect(() => {
-		document.documentElement.style.setProperty("--navbar-width-thin", NAVBAR_WIDTH_THIN)
-		document.documentElement.style.setProperty("--navbar-width-wide", NAVBAR_WIDTH_WIDE)
-
 		setNavbarPosition()
 		window.addEventListener('resize', setNavbarPosition)
 	}, [])
@@ -128,15 +124,18 @@ function NavbarItem(props: {name: JSX.Element, linkTo: string, onClick: (linkTo:
 function setNavbarPosition() {
 	const isVertical : boolean = isNavbarVertical()
 	const navbarWidthThin : string = getNavbarWidthThin()
+	document.documentElement.style.setProperty("--navbar-width-thin", navbarWidthThin)
+	document.documentElement.style.setProperty("--navbar-width-wide", NAVBAR_WIDTH_WIDE)
 	document.documentElement.style.setProperty("--navbar-item-spacing", "1" + (isVertical ? "vh" : "vw"))
 	document.getElementById(NAVBAR)!.style.bottom = isVertical ? "0vh" : "auto"
 	document.getElementById(NAVBAR)!.style.right = isVertical ? "auto" : "0vw"
 	document.getElementById(NAVBAR)!.style.flexDirection = isVertical ? "column" : "row"
 	document.getElementById(NAVBAR)!.style.height = isVertical ? "100%" : navbarWidthThin
 	document.getElementById(NAVBAR)!.style.minHeight = isVertical ? "100%" : navbarWidthThin
+	document.getElementById(NAVBAR)!.style.width = isVertical ? navbarWidthThin : "100%"
 	document.getElementById(NAVBAR)!.style.minWidth = isVertical ? navbarWidthThin : "100%"
-	document.getElementById(APP_INCLUDING_FOOTER)!.style.marginLeft = isVertical ? PAGE_MARGIN_NAVBAR_SIDE : "0vw"
-	document.getElementById(APP_INCLUDING_FOOTER)!.style.marginTop = isVertical ? "0vh" : PAGE_MARGIN_NAVBAR_SIDE
+	// document.getElementById(APP_INCLUDING_FOOTER)!.style.marginLeft = isVertical ? navbarWidthThin : "0vw"
+	document.getElementById(APP_INCLUDING_FOOTER)!.style.marginTop = isVertical ? "0vh" : getIntValue(NAVBAR_WIDTH_THIN)+"%"
 
 	//Correctly position day/night option in navbar
 	const navbarItems = document.getElementsByClassName("NavbarItem")!
@@ -146,7 +145,7 @@ function setNavbarPosition() {
 }
 
 function getNavbarWidthThin(){
-	const amount = getIntValue(NAVBAR_WIDTH_THIN) * getAspectRatio()
+	const amount = Math.min(getIntValue(NAVBAR_WIDTH_THIN) * getAspectRatio(), getIntValue(NAVBAR_WIDTH_THIN))
 	return amount + "%"
 }
 

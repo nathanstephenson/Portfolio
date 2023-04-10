@@ -1,11 +1,14 @@
 :root {
-	--navbar-item-spacing: 2vh
+	--navbar-item-spacing: 2vh;
+	--backdrop-filter: blur(20px) saturate(200%) contrast(25%) brightness(110%);
 }
 
 .Navbar {
 	display: inline-flex;
 	flex-direction: column;
-	background: var(--background-colour-secondary);
+	background-color: rgba(128, 128, 128, 0.1);
+	backdrop-filter: var(--backdrop-filter);
+	-webkit-backdrop-filter: var(--backdrop-filter);
 	position: fixed;
 	top: 0vh;
 	bottom: 0vh;
