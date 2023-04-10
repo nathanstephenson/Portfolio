@@ -1,14 +1,13 @@
 :root {
 	--navbar-item-spacing: 2vh;
-	--backdrop-filter: blur(20px) saturate(200%) contrast(25%) brightness(110%);
 }
 
 .Navbar {
 	display: inline-flex;
 	flex-direction: column;
 	background-color: rgba(128, 128, 128, 0.1);
-	backdrop-filter: var(--backdrop-filter);
-	-webkit-backdrop-filter: var(--backdrop-filter);
+	backdrop-filter: var(--frosted-glass-backdrop);
+	-webkit-backdrop-filter: var(--frosted-glass-backdrop);
 	position: fixed;
 	top: 0vh;
 	bottom: 0vh;
@@ -29,11 +28,11 @@
 	transition-duration: var(--transition-speed);
 	margin: var(--navbar-item-spacing);
 	height: calc(var(--font-size) * 1.3);
-	width: calc(var(--font-size) * 1.3);
+	width: 80%;
 }
 
 .NavbarIcon {
-	width: 100%;
+	width: calc(var(--font-size) * 1.3);
 	fill: var(--text-colour-primary); /* Change the fill color to red */
 	stroke: var(--text-colour-primary); /* Change the stroke color to blue */
 	stroke-width: 1; /* Set the stroke width to 2 pixels */
