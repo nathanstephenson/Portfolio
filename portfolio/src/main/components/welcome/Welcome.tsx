@@ -1,6 +1,7 @@
 import { useLayoutEffect } from "react";
 
 import './Welcome.css'
+import ContentBox from "../contentBox/ContentBox";
 
 const WELCOME = "Welcome"
 const WELCOME_CONTENT = "Welcome-content"
@@ -19,9 +20,9 @@ export default function Welcome(props: any) {
 
 	return (
 		<div id={WELCOME} className={WELCOME}>
-			<div id={WELCOME_CONTENT}>
+			<ContentBox id={WELCOME_CONTENT}>
 				<p className={WELCOME_TEXT}>Nathan Stephenson</p>
-			</div>
+			</ContentBox>
 		</div>
 	)
 }
