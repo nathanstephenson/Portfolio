@@ -15,11 +15,11 @@ const NAVBAR_WIDTH_THIN = "5%"
 const NAVBAR_WIDTH_WIDE = "20%"
 
 const SMALL_HOME = HOME
-const WIDE_HOME = <>HOME</>
+const WIDE_HOME = <>{SMALL_HOME} HOME</>
 const SMALL_ABOUT = ABOUT
-const WIDE_ABOUT = <>ABOUT</>
+const WIDE_ABOUT = <>{SMALL_ABOUT} ABOUT</>
 const SMALL_PROJECTS = PROJECTS
-const WIDE_PROJECTS = <>PROJECTS</>
+const WIDE_PROJECTS = <>{SMALL_PROJECTS} PROJECTS</>
 const DAY_LOGO = MOON
 const NIGHT_LOGO = SUN
 
@@ -34,7 +34,7 @@ export default function Navbar() {
 		projects: SMALL_PROJECTS,
 		dark: NIGHT_LOGO
 	})
-	const navbarWidthThin = getNavbarWidthThin()
+	const navbarWidthThin = NAVBAR_WIDTH_THIN//getNavbarWidthThin()
 
 	useLayoutEffect(() => {
 		setNavbarPosition()
@@ -59,16 +59,14 @@ export default function Navbar() {
 	}
 	
 	function shrink() {
-		if(isNavbarVertical()){
-			setTextState({
-				home: SMALL_HOME,
-				about: SMALL_ABOUT,
-				projects: SMALL_PROJECTS,
-				dark: textState.dark
-			})
-			document.getElementById(NAVBAR)!.style.width = navbarWidthThin
-			document.documentElement.style.setProperty("--main-blur-amount", "0px")
-		}
+		setTextState({
+			home: SMALL_HOME,
+			about: SMALL_ABOUT,
+			projects: SMALL_PROJECTS,
+			dark: textState.dark
+		})
+		document.getElementById(NAVBAR)!.style.width = navbarWidthThin
+		document.documentElement.style.setProperty("--main-blur-amount", "0px")
 	}
 
 	const updateNightMode = () => {
