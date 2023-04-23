@@ -22,3 +22,16 @@
 	font-size: xx-large;
 	font-weight: 500;
 }
+
+.WelcomeLinks {
+	display: flex;
+	flex-direction: row;
+	gap: 2rem;
+	font-size: calc(var(--font-size) / 1.5);
+}
+
+.BrandLogo {
+	height: calc(var(--font-size) / 1.5);
+	fill: var(--text-colour-primary);
+	stroke-width: 1;
+}

@@ -2,10 +2,12 @@ import { useLayoutEffect } from "react";
 
 import './Welcome.css'
 import ContentBox from "../contentBox/ContentBox";
+import { GITHUB_ICON, LINKEDIN_ICON } from "images/svg";
 
 const WELCOME = "Welcome"
 const WELCOME_CONTENT = "WelcomeContent"
 const WELCOME_TEXT = "WelcomeText";
+const WELCOME_LINKS = "WelcomeLinks"
 const PARALLAX_MODIFIER = 0.8;
 
 export default function Welcome(props: any) {
@@ -22,6 +24,10 @@ export default function Welcome(props: any) {
 		<div id={WELCOME} className={WELCOME}>
 			<ContentBox id={WELCOME_CONTENT}>
 				<p className={WELCOME_TEXT}>Nathan Stephenson</p>
+				<div className={WELCOME_LINKS}>
+					<WelcomeLink link='https://www.linkedin.com/in/nathan-stephenson-5873a81b3/' text={LINKEDIN_ICON}/> | 
+					<WelcomeLink link='https://github.com/nathanstephenson' text={GITHUB_ICON}/>
+				</div>
 			</ContentBox>
 		</div>
 	)
@@ -58,4 +64,10 @@ function bellCurve(x: number, mean: number, standardDeviation: number) {
 	var a = 1 / Math.sqrt(2 * Math.PI * variance);
 	var b = -1 * ((x - m) * (x - m)) / (2 * variance);
 	return a * Math.exp(b);
+}
+
+function WelcomeLink(props: {link: string, text: JSX.Element}){
+	return (
+		<a href={props.link}  target='_blank' rel='noreferrer noopener'>{props.text}</a>
+	)
 }
