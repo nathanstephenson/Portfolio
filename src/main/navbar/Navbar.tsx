@@ -25,7 +25,7 @@ locationIcons.set("about", SMALL_ABOUT)
 locationIcons.set("projects", SMALL_PROJECTS)
 
 export default function Navbar() {
-	const location = useLocation().pathname.match('([^\/]+$)')?.[0]
+	const location = useLocation().pathname.match('([^#/]+$)')?.[0]
 
 	const [textState, setTextState] = useState({
 		home: SMALL_HOME,
