@@ -4,8 +4,8 @@ import './Welcome.css'
 import ContentBox from "../contentBox/ContentBox";
 
 const WELCOME = "Welcome"
-const WELCOME_CONTENT = "Welcome-content"
-const WELCOME_TEXT = "Welcome-text";
+const WELCOME_CONTENT = "WelcomeContent"
+const WELCOME_TEXT = "WelcomeText";
 const PARALLAX_MODIFIER = 0.8;
 
 export default function Welcome(props: any) {
