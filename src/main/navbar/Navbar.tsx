@@ -37,7 +37,7 @@ export default function Navbar() {
 		logo: locationIcons.get(location)
 	})
 	const [darkModeToggle, setDarkModeToggle] = useState({
-		isDark: false,
+		isDark: true,
 		text: NIGHT_LOGO,
 	})
 	const [isWide, setIsWide] = useState(false)
