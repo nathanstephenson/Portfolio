@@ -1,5 +1,5 @@
-import { useLayoutEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useLayoutEffect, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 
 import 'App.css'
 import './Navbar.css'
@@ -19,15 +19,22 @@ const WIDE_PROJECTS = <>{SMALL_PROJECTS} PROJECTS</>
 const DAY_LOGO = MOON
 const NIGHT_LOGO = SUN
 
+const locationIcons = new Map()
+locationIcons.set(undefined, SMALL_HOME)
+locationIcons.set("about", SMALL_ABOUT)
+locationIcons.set("projects", SMALL_PROJECTS)
+
 export default function Navbar() {
+	const location = useLocation().pathname.match('([^\/]+$)')?.[0]
+
 	const [textState, setTextState] = useState({
 		home: SMALL_HOME,
 		about: SMALL_ABOUT,
 		projects: SMALL_PROJECTS
 	})
 	const [currentPage, setCurrentPage] = useState({
-		address: "",
-		logo: SMALL_HOME
+		address: location ? location : "",
+		logo: locationIcons.get(location)
 	})
 	const [darkModeToggle, setDarkModeToggle] = useState({
 		isDark: false,
@@ -36,8 +43,32 @@ export default function Navbar() {
 	const [isWide, setIsWide] = useState(false)
 
 	useLayoutEffect(()=>{
+		function closeIfClickOutside(e: any) {
+			if(e.target!.className !== NAVBAR_ITEM 
+				&& e.target!.className !== NAVBAR 
+				&& e.target!.className.baseVal !== 'NavbarIcon' 
+				&& e.target!.className.baseVal !== ''){
+				shrink()
+			}
+		}
 		document.addEventListener('click', closeIfClickOutside)
 	}, [])
+
+	useEffect(()=>{
+		function updateCurrentPage(linkTo: string = "", pageLogo: JSX.Element) {
+			if(linkTo === currentPage.address){
+				setTimeout(shrink, 50)
+				return;
+			}
+			setCurrentPage({
+				address: linkTo,
+				logo: pageLogo
+			})
+			document.documentElement.scrollTop = 0;
+			setTimeout(shrink, 50)
+		}
+		updateCurrentPage(location, locationIcons.get(location))
+	}, [location])
 
 	function widen() {
 		if(isWide){
@@ -68,19 +99,6 @@ export default function Navbar() {
 		document.documentElement.style.setProperty("--webkit-user-select", "text")
 	}
 
-	function updateCurrentPage(linkTo: string, pageLogo: JSX.Element) {
-		if(linkTo === currentPage.address){
-			setTimeout(shrink, 50)
-			return;
-		}
-		setCurrentPage({
-			address: linkTo,
-			logo: pageLogo
-		})
-		document.documentElement.scrollTop = 0;
-		setTimeout(shrink, 50)
-	}
-
 	function updateDarkMode() {
 		const newDarkMode = !darkModeToggle.isDark
 		setDarkModeToggle({
@@ -100,18 +118,12 @@ export default function Navbar() {
 		}
 	}
 
-	function closeIfClickOutside(e: any) {
-		if(e.target!.className !== NAVBAR_ITEM && e.target!.className !== NAVBAR && e.target!.className.baseVal !== 'NavbarIcon' && e.target!.className.baseVal !== ''){
-			shrink()
-		}
-	}
-
 	return (
 		<div className={NAVBAR} id={NAVBAR} onClick={widen} onMouseLeave={shrink}>
 			{isWide ? <>
-				<NavbarItem name={textState.home} linkTo="" pageLogo={SMALL_HOME} onClick={updateCurrentPage}/>
-				<NavbarItem name={textState.about} linkTo="about" pageLogo={SMALL_ABOUT} onClick={updateCurrentPage}/>
-				<NavbarItem name={textState.projects} linkTo="projects" pageLogo={SMALL_PROJECTS} onClick={updateCurrentPage}/>
+				<NavbarItem name={textState.home} linkTo="" pageLogo={SMALL_HOME}/>
+				<NavbarItem name={textState.about} linkTo="about" pageLogo={SMALL_ABOUT}/>
+				<NavbarItem name={textState.projects} linkTo="projects" pageLogo={SMALL_PROJECTS}/>
 				<NavbarItem name={darkModeToggle.text} linkTo={currentPage.address} pageLogo={currentPage.logo} onClick={updateDarkMode}/>
 			</> : <>
 				<div id={Math.random().toString()} className={NAVBAR_ITEM}>{currentPage.logo}</div>
@@ -120,9 +132,9 @@ export default function Navbar() {
 	)
 }
 
-function NavbarItem(props: {name: JSX.Element, linkTo: string, pageLogo: JSX.Element, onClick: (linkTo: string, pageLogo: JSX.Element)=>void}) {
+function NavbarItem(props: {name: JSX.Element, linkTo: string, pageLogo: JSX.Element, onClick?: (linkTo: string, pageLogo: JSX.Element)=>void}) {
 	return (
-		<div id={Math.random().toString()} className={NAVBAR_ITEM} onClick={()=>{props.onClick(props.linkTo, props.pageLogo)}}>
+		<div id={Math.random().toString()} className={NAVBAR_ITEM} onClick={props.onClick ? ()=>{props.onClick!(props.linkTo, props.pageLogo)} : ()=>{}}>
 			<Link to={props.linkTo}>{props.name}</Link>
 		</div>
 	)
