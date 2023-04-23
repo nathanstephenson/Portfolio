@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import 'App.css'
@@ -20,90 +20,74 @@ const DAY_LOGO = MOON
 const NIGHT_LOGO = SUN
 
 export default function Navbar() {
-	var [pageState, setPageState] = useState({
-		currentPageAddress: "",
-		currentPageLogo: SMALL_HOME,
-		isWide: false,
-		darkMode: true
-	})
-	var [textState, setTextState] = useState({
+	const [textState, setTextState] = useState({
 		home: SMALL_HOME,
 		about: SMALL_ABOUT,
-		projects: SMALL_PROJECTS,
-		dark: NIGHT_LOGO
+		projects: SMALL_PROJECTS
 	})
+	const [currentPage, setCurrentPage] = useState({
+		address: "",
+		logo: SMALL_HOME
+	})
+	const [darkModeToggle, setDarkModeToggle] = useState({
+		isDark: false,
+		text: NIGHT_LOGO,
+	})
+	const [isWide, setIsWide] = useState(false)
+
+	useLayoutEffect(()=>{
+		document.addEventListener('click', closeIfClickOutside)
+	}, [])
 
 	function widen() {
-		if(pageState.isWide){
+		if(isWide){
 			return;
 		}
 		setTimeout(() => {
 			setTextState({
 				home: WIDE_HOME,
 				about: WIDE_ABOUT,
-				projects: WIDE_PROJECTS,
-				dark: textState.dark
+				projects: WIDE_PROJECTS
 			})
 		}, 50)
-		setPageState({
-			currentPageAddress: pageState.currentPageAddress,
-			currentPageLogo: pageState.currentPageLogo,
-			isWide: true,
-			darkMode: pageState.darkMode
-		})
+		setIsWide(true)
 		document.documentElement.style.setProperty("--main-blur-amount", BLUR_AMOUNT)
 		document.documentElement.style.setProperty("--body-interaction", "none")
+		document.documentElement.style.setProperty("--webkit-user-select", "none")
 	}
 	
 	function shrink() {
 		setTextState({
 			home: SMALL_HOME,
 			about: SMALL_ABOUT,
-			projects: SMALL_PROJECTS,
-			dark: textState.dark
+			projects: SMALL_PROJECTS
 		})
-		setPageState({
-			currentPageAddress: pageState.currentPageAddress,
-			currentPageLogo: pageState.currentPageLogo,
-			isWide: false,
-			darkMode: pageState.darkMode
-		})
+		setIsWide(false)
 		document.documentElement.style.setProperty("--main-blur-amount", "0px")
 		document.documentElement.style.setProperty("--body-interaction", "all")
+		document.documentElement.style.setProperty("--webkit-user-select", "text")
 	}
 
 	function updateCurrentPage(linkTo: string, pageLogo: JSX.Element) {
-		if(linkTo === pageState.currentPageAddress){
+		if(linkTo === currentPage.address){
 			setTimeout(shrink, 50)
 			return;
 		}
-		console.log(linkTo)
-		setPageState({
-			currentPageAddress: linkTo,
-			currentPageLogo: pageLogo,
-			isWide: pageState.isWide,
-			darkMode: pageState.darkMode
+		setCurrentPage({
+			address: linkTo,
+			logo: pageLogo
 		})
-		console.log(pageState)
 		document.documentElement.scrollTop = 0;
 		setTimeout(shrink, 50)
 	}
 
-	function updateNightMode() {
-		const darkMode = !pageState.darkMode
-		setTextState({
-			home: textState.home,
-			about: textState.about,
-			projects: textState.projects,
-			dark: darkMode ? NIGHT_LOGO : DAY_LOGO
+	function updateDarkMode() {
+		const newDarkMode = !darkModeToggle.isDark
+		setDarkModeToggle({
+			isDark: newDarkMode, 
+			text: newDarkMode ? NIGHT_LOGO : DAY_LOGO
 		})
-		setPageState({
-			currentPageAddress: pageState.currentPageAddress,
-			currentPageLogo: pageState.currentPageLogo,
-			isWide: pageState.isWide,
-			darkMode: darkMode
-		})
-		if(darkMode){
+		if(newDarkMode){
 			document.documentElement.style.setProperty('--background-colour-primary', 'var(--background-colour-primary-dark)')
 			document.documentElement.style.setProperty('--background-colour-secondary', 'var(--background-colour-secondary-dark)')
 			document.documentElement.style.setProperty('--text-colour-primary', 'var(--background-colour-primary-light)')
@@ -116,15 +100,21 @@ export default function Navbar() {
 		}
 	}
 
+	function closeIfClickOutside(e: any) {
+		if(e.target!.className !== NAVBAR_ITEM && e.target!.className !== NAVBAR && e.target!.className.baseVal !== 'NavbarIcon' && e.target!.className.baseVal !== ''){
+			shrink()
+		}
+	}
+
 	return (
 		<div className={NAVBAR} id={NAVBAR} onClick={widen} onMouseLeave={shrink}>
-			{pageState.isWide ? <>
+			{isWide ? <>
 				<NavbarItem name={textState.home} linkTo="" pageLogo={SMALL_HOME} onClick={updateCurrentPage}/>
 				<NavbarItem name={textState.about} linkTo="about" pageLogo={SMALL_ABOUT} onClick={updateCurrentPage}/>
 				<NavbarItem name={textState.projects} linkTo="projects" pageLogo={SMALL_PROJECTS} onClick={updateCurrentPage}/>
-				<NavbarItem name={textState.dark} linkTo={pageState.currentPageAddress} pageLogo={pageState.currentPageLogo} onClick={updateNightMode}/>
+				<NavbarItem name={darkModeToggle.text} linkTo={currentPage.address} pageLogo={currentPage.logo} onClick={updateDarkMode}/>
 			</> : <>
-				<div id={Math.random().toString()} className={NAVBAR_ITEM}>{pageState.currentPageLogo}</div>
+				<div id={Math.random().toString()} className={NAVBAR_ITEM}>{currentPage.logo}</div>
 			</>}
 		</div>
 	)
@@ -139,7 +129,7 @@ function NavbarItem(props: {name: JSX.Element, linkTo: string, pageLogo: JSX.Ele
 }
 
 function isPageVertical() : boolean {
-	return getAspectRatio() > 0.9
+	return getAspectRatio() < 0.9
 }
 
 function getAspectRatio() : number {

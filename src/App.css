@@ -16,6 +16,7 @@
 	--frosted-glass-backdrop: blur(20px) saturate(200%) contrast(25%) brightness(110%);
 
 	--body-interaction: all;
+	--webkit-user-select: text;
 }
 
 .App {
@@ -82,6 +83,7 @@ a:active { text-decoration: none; }
 	margin: 0;
 	pointer-events: var(--body-interaction);
 	user-select: var(--body-interaction);
+	-webkit-user-select: var(--webkit-user-select);
 }
 
 img {
