@@ -40,7 +40,7 @@ export default function Navbar() {
 		isDark: true,
 		text: NIGHT_LOGO,
 	})
-	const [isWide, setIsWide] = useState(false)
+	const [isOpen, setIsOpen] = useState(false)
 
 	useLayoutEffect(()=>{
 		function closeIfClickOutside(e: any) {
@@ -71,7 +71,7 @@ export default function Navbar() {
 	}, [location])
 
 	function widen() {
-		if(isWide){
+		if(isOpen){
 			return;
 		}
 		setTimeout(() => {
@@ -81,7 +81,7 @@ export default function Navbar() {
 				projects: WIDE_PROJECTS
 			})
 		}, 50)
-		setIsWide(true)
+		setIsOpen(true)
 		document.documentElement.style.setProperty("--main-blur-amount", BLUR_AMOUNT)
 		document.documentElement.style.setProperty("--body-interaction", "none")
 		document.documentElement.style.setProperty("--webkit-user-select", "none")
@@ -93,7 +93,7 @@ export default function Navbar() {
 			about: SMALL_ABOUT,
 			projects: SMALL_PROJECTS
 		})
-		setIsWide(false)
+		setIsOpen(false)
 		document.documentElement.style.setProperty("--main-blur-amount", "0px")
 		document.documentElement.style.setProperty("--body-interaction", "all")
 		document.documentElement.style.setProperty("--webkit-user-select", "text")
@@ -120,7 +120,7 @@ export default function Navbar() {
 
 	return (
 		<div className={NAVBAR} id={NAVBAR} onClick={widen} onMouseLeave={shrink}>
-			{isWide ? <>
+			{isOpen ? <>
 				<NavbarItem name={textState.home} linkTo="" pageLogo={SMALL_HOME}/>
 				<NavbarItem name={textState.about} linkTo="about" pageLogo={SMALL_ABOUT}/>
 				<NavbarItem name={textState.projects} linkTo="projects" pageLogo={SMALL_PROJECTS}/>
