@@ -1,25 +1,34 @@
 :root {
-	--navbar-item-spacing: 2vh;
+	--navbar-item-spacing: 0.5rem;
+	--navbar-border-radius: calc(var(--border-radius)*1.5);
+	--navbar-font-size: calc(var(--font-size) * 1);
+}
+
+.Navbar, .NavbarItem {
+	transition-duration: var(--transition-speed);
+	border-start-start-radius: calc(var(--navbar-border-radius) / 5);
+    border-start-end-radius: var(--navbar-border-radius);
+    border-end-start-radius: var(--navbar-border-radius);
+    border-end-end-radius: var(--navbar-border-radius);
+	overflow: hidden; 
 }
 
 .Navbar {
 	display: inline-flex;
-	flex-direction: row;
+	flex-direction: column;
 	background-color: rgba(128, 128, 128, 0.1);
 	position: fixed;
 	top: 0vh;
 	bottom: 0vh;
 	left: 0vw;
-	width: 5%;
-	min-height: 100vh;
-	margin: 0;
-	padding: 0;
-	height: 100%;
+	max-width: 100%;
+	max-height: fit-content;
+	margin: 1rem;
+	padding: 0.5rem;
 	align-items: center;
 	justify-content: center;
 	vertical-align: middle;
-	transition-duration: var(--transition-speed);
-	z-index : 1;
+	z-index : 100;
 }
 
 @Supports (backdrop-filter: var(--frosted-glass-backdrop)) or (-webkit-backdrop-filter: var(--frosted-glass-backdrop))  {
@@ -29,16 +38,22 @@
 }
 
 .NavbarItem {
-	transition-duration: var(--transition-speed);
-	margin: var(--navbar-item-spacing);
-	height: calc(var(--font-size) * 1.3);
-	width: 80%;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	margin-left: var(--navbar-item-spacing);
+	margin-right: var(--navbar-item-spacing);
+	font-size: var(--navbar-font-size);
+	height: calc(var(--navbar-font-size) * 1.55);
+	width: 100%;
+	cursor: pointer;
 }
 
 .NavbarIcon {
-	width: calc(var(--font-size) * 1.3);
-	fill: var(--text-colour-primary); /* Change the fill color to red */
-	stroke-width: 1; /* Set the stroke width to 2 pixels */
+	height: var(--navbar-font-size);
+	fill: var(--text-colour-primary);
+	stroke-width: 1;
 }
 
 .NavbarItem:hover {
