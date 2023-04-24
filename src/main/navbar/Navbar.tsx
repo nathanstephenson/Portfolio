@@ -16,8 +16,8 @@ const SMALL_ABOUT = ABOUT
 const WIDE_ABOUT = <>{SMALL_ABOUT} ABOUT</>
 const SMALL_PROJECTS = PROJECTS
 const WIDE_PROJECTS = <>{SMALL_PROJECTS} PROJECTS</>
-const DAY_LOGO = MOON
-const NIGHT_LOGO = SUN
+const DAY_LOGO = SUN
+const NIGHT_LOGO = MOON
 
 const locationIcons = new Map()
 locationIcons.set(undefined, SMALL_HOME)

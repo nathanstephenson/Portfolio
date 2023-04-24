@@ -11,7 +11,7 @@
 	--text-colour-primary: var(--background-colour-primary-light);
 	--text-colour-secondary: var(--background-colour-primary-dark);
 
-	--font-size: calc(4px + 2vmin);
+	--font-size: large;
 	--main-blur-amount: 0px;
 	--frosted-glass-backdrop: blur(20px) saturate(200%) contrast(25%) brightness(110%);
 

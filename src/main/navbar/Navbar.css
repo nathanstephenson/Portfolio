@@ -1,7 +1,7 @@
 :root {
 	--navbar-item-spacing: 0.5rem;
 	--navbar-border-radius: calc(var(--border-radius)*1.5);
-	--navbar-font-size: calc(var(--font-size) * 1);
+	--navbar-font-size: xx-large;
 }
 
 .Navbar, .NavbarItem {
@@ -48,10 +48,12 @@
 	height: calc(var(--navbar-font-size) * 1.55);
 	width: 100%;
 	cursor: pointer;
+	padding: 0.15rem;
 }
 
 .NavbarIcon {
-	height: var(--navbar-font-size);
+	justify-content: center;
+	align-items: center;
 	fill: var(--text-colour-primary);
 	stroke-width: 1;
 }

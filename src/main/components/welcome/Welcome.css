@@ -31,7 +31,7 @@
 }
 
 .BrandLogo {
-	height: calc(var(--font-size) / 1.5);
+	height: calc(xx-large / 1.5);
 	fill: var(--text-colour-primary);
 	stroke-width: 1;
 }

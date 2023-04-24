@@ -17,6 +17,11 @@
 	border-top: var(--border-colour);
 }	
 
-.Footer-row {
-	display: inline-block;
+.FooterRow {
+	display: inline-flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-items: center;
+	justify-content: center;
+	align-items: center;
 }
