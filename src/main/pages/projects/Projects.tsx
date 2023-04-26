@@ -65,12 +65,3 @@ interface Repository {
 	const summary = repository.description || 'No description available';
 	return `Title: ${title}\nLast Updated: ${lastUpdated}\nSummary: ${summary}`;
   }
-  
-  // Usage example
-  const username = 'your-github-username';
-  getRepositories(username)
-	.then((sortedRepositories) => {
-	  const repositorySummaries = sortedRepositories.map((repository) => formatRepository(repository));
-	  console.log(repositorySummaries);
-	})
-	.catch((error) => console.error(error));
