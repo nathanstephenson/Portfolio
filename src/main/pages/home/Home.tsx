@@ -1,4 +1,4 @@
-import initiald from 'images/initiald.jpg'
+import me from 'images/bangkok.jpeg'
 import ContentBox from 'main/components/contentBox/ContentBox'
 import Welcome from 'main/components/welcome/Welcome'
 
@@ -12,7 +12,7 @@ export default function Home() {
 	return (
 		<>
 			<Welcome/>
-			<ContentBox img={initiald} imgAlt='Initial D'/>
+			<ContentBox className='homeImage' img={me} imgAlt='Initial D'/>
 			<ContentBox>
 				<p>{ABOUT_TEXT}</p>
 			</ContentBox>

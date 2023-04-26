@@ -9,7 +9,7 @@ const CONTENT_BOX_IMAGE = "ContentBoxImage"
 const CONTENT_BOX_MAIN = "ContentBoxMain"
 const CONTENT_BOX_TITLE = "ContentBoxTitle"
 
-export default function ContentBox(props: {id?: string, img?: string, imgAlt?: string, text?: string, linkTarget?: string, outline?: boolean, children?: any}) {
+export default function ContentBox(props: {id?: string, className?:string, img?: string, imgAlt?: string, text?: string, linkTarget?: string, outline?: boolean, children?: any}) {
 	const [isVisible, setVisible] = useState(false);
 	const domRef = useRef(null);
 	const id = props.id ? props.id : Math.random().toString();
@@ -39,7 +39,7 @@ export default function ContentBox(props: {id?: string, img?: string, imgAlt?: s
 	
 	const image = <img id={CONTENT_BOX_IMAGE+id} src={props.img} alt={props.imgAlt ? props.imgAlt : 'image'} />
 	return (
-		<div className={`${CONTENT_BOX} ${isVisible ? '' : 'invisible'} ${props.outline ? 'outlined' : ''}`} id={id} ref={domRef}>
+		<div className={`${CONTENT_BOX} ${props.className ? props.className  : ''} ${isVisible ? '' : 'invisible'} ${props.outline ? 'outlined' : ''}`} id={id} ref={domRef}>
 			{props.img && 
 				(props.text ? <div className={CONTENT_BOX_IMAGE}>{image}</div> 
 						: image
