@@ -12,9 +12,8 @@ const PARALLAX_MODIFIER = 0.8;
 
 export default function Welcome(props: any) {
 	useLayoutEffect(() => {
-		document.documentElement.style.setProperty('--parallax-modifier', PARALLAX_MODIFIER.toString())
-	  	window.addEventListener('scroll', render)
 		render()
+	  	window.addEventListener('scroll', render)
 		return () => {
 			window.removeEventListener('scroll', render)
 		}
