@@ -1,0 +1,11 @@
+:root {
+
+}
+
+.ContentBox.homeImage {
+    display: flex;
+	align-items: center;
+    justify-content: space-between;
+	max-height: 50rem;
+	max-width: 50rem;
+}  

@@ -37,11 +37,6 @@
 	-webkit-backdrop-filter: var(--frosted-glass-backdrop);
   }
 
-  .ContentBox.homeImage {
-	  max-height: 50rem;
-	  max-width: 50rem;
-  }  
-
   .ContentBoxImage {
 	position: relative;
 	display: inline-block;
