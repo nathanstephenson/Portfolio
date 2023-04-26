@@ -2,6 +2,8 @@ import ContentBox from 'main/components/contentBox/ContentBox'
 import { useLayoutEffect, useState } from 'react';
 import initiald from 'images/initiald.jpg'
 
+import './Projects.css'
+
 export default function Home() {
 	const [repositories, setRepositories] = useState([<></>])
 
@@ -20,9 +22,9 @@ export default function Home() {
 	}, [])
 
 	return (
-		<>
+		<div className="ProjectsContainer">
 			{repositories}
-		</>
+		</div>
 	)
 }
 // Define a TypeScript interface for a repository object
