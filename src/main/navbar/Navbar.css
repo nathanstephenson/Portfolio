@@ -31,6 +31,16 @@
 	z-index : 100;
 }
 
+.Navbar.open {
+	min-width: 10rem;
+	min-height: 10rem;
+}
+
+.Navbar.closed {
+	min-width: 0.5rem;
+	min-height: 0.5rem;
+}
+
 @Supports (backdrop-filter: var(--frosted-glass-backdrop)) or (-webkit-backdrop-filter: var(--frosted-glass-backdrop))  {
 	.Navbar {
 		-webkit-backdrop-filter: var(--frosted-glass-backdrop);

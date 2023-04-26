@@ -52,6 +52,7 @@ export default function Navbar() {
 			}
 		}
 		document.addEventListener('click', closeIfClickOutside)
+		changeThemeColor()
 	}, [])
 
 	useEffect(()=>{
@@ -116,10 +117,11 @@ export default function Navbar() {
 			document.documentElement.style.setProperty('--text-colour-primary', 'var(--background-colour-primary-dark)')
 			document.documentElement.style.setProperty('--text-colour-secondary', 'var(--background-colour-primary-light)')
 		}
+		changeThemeColor()
 	}
 
 	return (
-		<div className={NAVBAR} id={NAVBAR} onClick={widen} onMouseLeave={shrink}>
+		<div className={`${NAVBAR} ${isOpen ? 'open' : 'closed'}`} id={NAVBAR} onClick={widen} onMouseLeave={shrink}>
 			{isOpen ? <>
 				<NavbarItem name={textState.home} linkTo="" pageLogo={SMALL_HOME}/>
 				<NavbarItem name={textState.about} linkTo="about" pageLogo={SMALL_ABOUT}/>
@@ -138,6 +140,12 @@ function NavbarItem(props: {name: JSX.Element, linkTo: string, pageLogo: JSX.Ele
 			<Link to={props.linkTo}>{props.name}</Link>
 		</div>
 	)
+}
+
+function changeThemeColor() {
+    const metaThemeColor = document.querySelector("meta[name=theme-color]")!
+    metaThemeColor.setAttribute("content", document.documentElement.getAttribute("var(--background-colour-primary)")!)
+	console.log(metaThemeColor,document.documentElement.getAttribute("var(--background-colour-primary)"))
 }
 
 function isPageVertical() : boolean {
