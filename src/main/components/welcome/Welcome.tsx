@@ -40,10 +40,10 @@ function WelcomeLink(props: {link: string, text: JSX.Element}){
 
 function render() {
 	const welcome = document.getElementById(WELCOME)!
+	welcome.style.minHeight = '100vh'
 	const height = Number.parseInt(welcome.style.minHeight!.match('^[0-9]*')?.[0]!)
 	const welcomeHeight = (height / 100) * window.innerHeight;
 	const scrollPercent = calculateSrollPercent(welcomeHeight, PARALLAX_MODIFIER)
-	welcome.style.minHeight = '100vh'
 	setContentPosition(scrollPercent);
 	const welcome_content = document.getElementById(WELCOME_CONTENT)!
 	console.log(welcome_content.style.transform)
