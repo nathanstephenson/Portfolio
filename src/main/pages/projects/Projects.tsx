@@ -39,7 +39,7 @@ export default function Home() {
 
 interface Repository {
 	name: string;
-	updated_at: string;
+	pushed_at: string;
 	description: string;
 	html_url: string;
 }
@@ -62,9 +62,10 @@ async function getRepositories(username: string): Promise<Repository[]> {
 
 //sort repositories by date in descending order
 function sortRepositories(repositories: Repository[]): Repository[] {
+	console.log(repositories)
 	return repositories.sort((a, b) => {
-		const dateA = new Date(a.updated_at);
-		const dateB = new Date(b.updated_at);
+		const dateA = new Date(a.pushed_at);
+		const dateB = new Date(b.pushed_at);
 		return dateB.getTime() - dateA.getTime();
 	});
 }
