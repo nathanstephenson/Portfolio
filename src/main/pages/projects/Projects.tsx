@@ -20,7 +20,7 @@ export default function Home() {
 			setRepositories(repos.map(repo => {
 				const repoName: string = getRepoName(repo.name)
 				const repoDescription: string = getRepoDescription(repo)
-				const repoImage: string = getRpoImage(repo.name)
+				const repoImage: string = getRepoImage(repo.name)
 				return (
 					<ContentBox text={repoName} className='project' linkTarget={repo.html_url} img={repoImage} imgAlt={repo.name} outline={true}>
 						<p>{repoDescription}</p>
@@ -71,16 +71,22 @@ function sortRepositories(repositories: Repository[]): Repository[] {
 }
 
 function getRepoName(name: string): string {
+	let displayName = name
 	switch (name.toLowerCase()) {
 		case DND20:
-			return `Tabletop Game Simulator (${name})`
+			displayName = `Tabletop Game Simulator`
+			break
 		case ASPIRE_GAME:
-			return `Graphics Engine (${name})`
+			displayName = `Graphics Engine`
+			break
 		case C130:
-			return `Wiley Edge Demo Repo (${name})`
-		default:
-			return name
+			displayName = `Wiley Edge Demo Repo`
+			break
 	}
+	if(displayName !== name){
+		displayName += ` (${name})`
+	}
+	return displayName
 }
 
 function getRepoDescription(repo: Repository): string {
@@ -99,7 +105,7 @@ function getRepoDescription(repo: Repository): string {
 	}
 }
 
-function getRpoImage(name: string): string {
+function getRepoImage(name: string): string {
 	switch (name.toLowerCase()) {
 		case PORTFOLIO:
 			return portfolioImage
