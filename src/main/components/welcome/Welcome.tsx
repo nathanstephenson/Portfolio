@@ -2,17 +2,18 @@ import { useLayoutEffect } from "react";
 
 import './Welcome.css'
 import ContentBox from "../contentBox/ContentBox";
+import { GITHUB_ICON, LINKEDIN_ICON } from "images/svg";
 
 const WELCOME = "Welcome"
-const WELCOME_CONTENT = "Welcome-content"
-const WELCOME_TEXT = "Welcome-text";
+const WELCOME_CONTENT = "WelcomeContent"
+const WELCOME_TEXT = "WelcomeText";
+const WELCOME_LINKS = "WelcomeLinks"
 const PARALLAX_MODIFIER = 0.8;
 
 export default function Welcome(props: any) {
 	useLayoutEffect(() => {
-		document.documentElement.style.setProperty('--parallax-modifier', PARALLAX_MODIFIER.toString())
-	  	window.addEventListener('scroll', render)
 		render()
+	  	window.addEventListener('scroll', render)
 		return () => {
 			window.removeEventListener('scroll', render)
 		}
@@ -22,17 +23,27 @@ export default function Welcome(props: any) {
 		<div id={WELCOME} className={WELCOME}>
 			<ContentBox id={WELCOME_CONTENT}>
 				<p className={WELCOME_TEXT}>Nathan Stephenson</p>
+				<div className={WELCOME_LINKS}>
+					<WelcomeLink link='https://www.linkedin.com/in/nathan-stephenson-5873a81b3/' text={LINKEDIN_ICON}/> | 
+					<WelcomeLink link='https://github.com/nathanstephenson' text={GITHUB_ICON}/>
+				</div>
 			</ContentBox>
 		</div>
 	)
 }
 
+function WelcomeLink(props: {link: string, text: JSX.Element}){
+	return (
+		<a href={props.link}  target='_blank' rel='noreferrer noopener'>{props.text}</a>
+	)
+}
+
 function render() {
 	const welcome = document.getElementById(WELCOME)!
+	welcome.style.minHeight = '100vh'
 	const height = Number.parseInt(welcome.style.minHeight!.match('^[0-9]*')?.[0]!)
 	const welcomeHeight = (height / 100) * window.innerHeight;
 	const scrollPercent = calculateSrollPercent(welcomeHeight, PARALLAX_MODIFIER)
-	welcome.style.minHeight = '100vh'
 	setContentPosition(scrollPercent);
 	const welcome_content = document.getElementById(WELCOME_CONTENT)!
 	console.log(welcome_content.style.transform)
@@ -41,7 +52,7 @@ function render() {
 function setContentPosition(scrollPercent: number) {
 	const transformModifier = (200*PARALLAX_MODIFIER) - (scrollPercent * PARALLAX_MODIFIER);
 	const welcome_content = document.getElementById(WELCOME_CONTENT)!
-	const yVal = 100 - bellCurve(transformModifier, 50, 60) * 10000
+	const yVal = 100 - 5 - bellCurve(transformModifier, 50, 60) * 10000
 	welcome_content.style.transform = 'translateY(' + yVal + '%)';
 }
 

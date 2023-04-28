@@ -7,12 +7,16 @@
 	--background-colour-secondary-light: #EB9486;
 	--background-colour-primary: var(--background-colour-primary-dark);
 	--background-colour-secondary: var(--background-colour-secondary-dark);
-	--background-colour-footer: var(--background-colour-secondary);
+	--background-colour-footer: var(--background-colour-primary);
 	--text-colour-primary: var(--background-colour-primary-light);
-	--text-colour-secondary: var(--background-colour-primary-light);
+	--text-colour-secondary: var(--background-colour-primary-dark);
 
-	--font-size: calc(4px + 2vmin);
+	--font-size: large;
 	--main-blur-amount: 0px;
+	--frosted-glass-backdrop: blur(20px) saturate(200%) contrast(25%) brightness(110%);
+
+	--body-interaction: all;
+	--webkit-user-select: text;
 }
 
 .App {
@@ -57,10 +61,6 @@ a:active { text-decoration: none; }
 
 .App-main {
 	min-height: 100vh;
-    -webkit-filter: blur(var(--main-blur-amount));
-    -moz-filter: blur(var(--main-blur-amount));
-    -o-filter: blur(var(--main-blur-amount));
-    -ms-filter: blur(var(--main-blur-amount));
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -70,6 +70,10 @@ a:active { text-decoration: none; }
 }
 
 .App-including-footer {
+    -webkit-filter: blur(var(--main-blur-amount));
+    -moz-filter: blur(var(--main-blur-amount));
+    -o-filter: blur(var(--main-blur-amount));
+    -ms-filter: blur(var(--main-blur-amount));
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -77,6 +81,9 @@ a:active { text-decoration: none; }
 	bottom: 0%;
 	width: 100%;
 	margin: 0;
+	pointer-events: var(--body-interaction);
+	user-select: var(--body-interaction);
+	-webkit-user-select: var(--webkit-user-select);
 }
 
 img {

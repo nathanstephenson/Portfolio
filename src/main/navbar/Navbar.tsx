@@ -1,93 +1,112 @@
-import { useLayoutEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useLayoutEffect, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 
 import 'App.css'
 import './Navbar.css'
-import { getIntValue } from 'Utils'
 import { MOON, SUN, SQUARE as HOME, ABOUT, PROJECTS } from 'images/svg'
 
-const APP_INCLUDING_FOOTER = "App-including-footer"
 const BLUR_AMOUNT = "10px"
 
 const NAVBAR_ITEM = "NavbarItem"
 const NAVBAR = "Navbar"
-const NAVBAR_WIDTH_THIN = "5%"
-const NAVBAR_WIDTH_WIDE = "20%"
-const PAGE_MARGIN_NAVBAR_SIDE = getIntValue(NAVBAR_WIDTH_THIN) + "%"
 
 const SMALL_HOME = HOME
-const WIDE_HOME = <>HOME</>
+const WIDE_HOME = <>{SMALL_HOME} HOME</>
 const SMALL_ABOUT = ABOUT
-const WIDE_ABOUT = <>ABOUT</>
+const WIDE_ABOUT = <>{SMALL_ABOUT} ABOUT</>
 const SMALL_PROJECTS = PROJECTS
-const WIDE_PROJECTS = <>PROJECTS</>
+const WIDE_PROJECTS = <>{SMALL_PROJECTS} PROJECTS</>
 const DAY_LOGO = SUN
 const NIGHT_LOGO = MOON
 
+const locationIcons = new Map()
+locationIcons.set(undefined, SMALL_HOME)
+locationIcons.set("about", SMALL_ABOUT)
+locationIcons.set("projects", SMALL_PROJECTS)
+
 export default function Navbar() {
-	var [pageState, setPageState] = useState({
-		currentPage: "",
-		darkMode: true
-	})
-	var [textState, setTextState] = useState({
+	const location = useLocation().pathname.match('([^#/]+$)')?.[0]
+
+	const [textState, setTextState] = useState({
 		home: SMALL_HOME,
 		about: SMALL_ABOUT,
-		projects: SMALL_PROJECTS,
-		dark: NIGHT_LOGO
+		projects: SMALL_PROJECTS
 	})
-	const navbarWidthThin = getNavbarWidthThin()
+	const [currentPage, setCurrentPage] = useState({
+		address: location ? location : "",
+		logo: locationIcons.get(location)
+	})
+	const [darkModeToggle, setDarkModeToggle] = useState({
+		isDark: true,
+		text: NIGHT_LOGO,
+	})
+	const [isOpen, setIsOpen] = useState(false)
 
-	useLayoutEffect(() => {
-		document.documentElement.style.setProperty("--navbar-width-thin", NAVBAR_WIDTH_THIN)
-		document.documentElement.style.setProperty("--navbar-width-wide", NAVBAR_WIDTH_WIDE)
-
-		setNavbarPosition()
-		window.addEventListener('resize', setNavbarPosition)
+	useLayoutEffect(()=>{
+		function closeIfClickOutside(e: any) {
+			if(e.target!.className !== NAVBAR_ITEM 
+				&& e.target!.className !== NAVBAR 
+				&& e.target!.className.baseVal !== 'NavbarIcon' 
+				&& e.target!.className.baseVal !== ''){
+				shrink()
+			}
+		}
+		document.addEventListener('click', closeIfClickOutside)
+		changeThemeColor()
 	}, [])
 
-	function widen() {
-		if(isNavbarVertical()){
-			setTimeout(() => {
-				if(document.getElementById(NAVBAR)!.style.width === NAVBAR_WIDTH_WIDE){
-					setTextState({
-						home: WIDE_HOME,
-						about: WIDE_ABOUT,
-						projects: WIDE_PROJECTS,
-						dark: textState.dark
-					})
-				}
-			}, 50)
-			document.getElementById(NAVBAR)!.style.width = NAVBAR_WIDTH_WIDE
-			document.documentElement.style.setProperty("--main-blur-amount", BLUR_AMOUNT)
+	useEffect(()=>{
+		function updateCurrentPage(linkTo: string = "", pageLogo: JSX.Element) {
+			if(linkTo === currentPage.address){
+				setTimeout(shrink, 50)
+				return;
+			}
+			setCurrentPage({
+				address: linkTo,
+				logo: pageLogo
+			})
+			document.documentElement.scrollTop = 0;
+			setTimeout(shrink, 50)
 		}
+		updateCurrentPage(location, locationIcons.get(location))
+	}, [location])
+
+	function widen() {
+		if(isOpen){
+			return;
+		}
+		setTimeout(() => {
+			setTextState({
+				home: WIDE_HOME,
+				about: WIDE_ABOUT,
+				projects: WIDE_PROJECTS
+			})
+		}, 50)
+		setIsOpen(true)
+		document.documentElement.style.setProperty("--main-blur-amount", BLUR_AMOUNT)
+		document.documentElement.style.setProperty("--body-interaction", "none")
+		document.documentElement.style.setProperty("--webkit-user-select", "none")
 	}
 	
 	function shrink() {
-		if(isNavbarVertical()){
-			setTextState({
-				home: SMALL_HOME,
-				about: SMALL_ABOUT,
-				projects: SMALL_PROJECTS,
-				dark: textState.dark
-			})
-			document.getElementById(NAVBAR)!.style.width = navbarWidthThin
-			document.documentElement.style.setProperty("--main-blur-amount", "0px")
-		}
+		setTextState({
+			home: SMALL_HOME,
+			about: SMALL_ABOUT,
+			projects: SMALL_PROJECTS
+		})
+		setIsOpen(false)
+		document.documentElement.style.setProperty("--main-blur-amount", "0px")
+		document.documentElement.style.setProperty("--body-interaction", "all")
+		document.documentElement.style.setProperty("--webkit-user-select", "text")
 	}
 
-	const updateNightMode = () => {
-		const darkMode = !pageState.darkMode
-		setPageState({
-			currentPage: pageState.currentPage,
-			darkMode: darkMode
+	function updateDarkMode() {
+		const newDarkMode = !darkModeToggle.isDark
+		setDarkModeToggle({
+			isDark: newDarkMode, 
+			text: newDarkMode ? NIGHT_LOGO : DAY_LOGO
 		})
-		setTextState({
-			home: textState.home,
-			about: textState.about,
-			projects: textState.projects,
-			dark: darkMode ? NIGHT_LOGO : DAY_LOGO
-		})
-		if(darkMode){
+		if(newDarkMode){
 			document.documentElement.style.setProperty('--background-colour-primary', 'var(--background-colour-primary-dark)')
 			document.documentElement.style.setProperty('--background-colour-secondary', 'var(--background-colour-secondary-dark)')
 			document.documentElement.style.setProperty('--text-colour-primary', 'var(--background-colour-primary-light)')
@@ -98,61 +117,39 @@ export default function Navbar() {
 			document.documentElement.style.setProperty('--text-colour-primary', 'var(--background-colour-primary-dark)')
 			document.documentElement.style.setProperty('--text-colour-secondary', 'var(--background-colour-primary-light)')
 		}
-	}
-
-	const updateCurrentPage = (linkTo: string) => {
-		setPageState({
-			currentPage: linkTo,
-			darkMode: pageState.darkMode
-		})
-		document.documentElement.scrollTop = 0;
+		changeThemeColor()
 	}
 
 	return (
-		<div className={NAVBAR} id={NAVBAR} onMouseOver={widen} onMouseLeave={shrink}>
-			<NavbarItem name={textState.home} linkTo="" onClick={updateCurrentPage}/>
-			<NavbarItem name={textState.about} linkTo="about" onClick={updateCurrentPage}/>
-			<NavbarItem name={textState.projects} linkTo="projects" onClick={updateCurrentPage}/>
-			<NavbarItem name={textState.dark} linkTo={pageState.currentPage} onClick={updateNightMode}/>
+		<div className={`${NAVBAR} ${isOpen ? 'open' : 'closed'}`} id={NAVBAR} onClick={widen} onMouseLeave={shrink}>
+			{isOpen ? <>
+				<NavbarItem name={textState.home} linkTo="" pageLogo={SMALL_HOME}/>
+				<NavbarItem name={textState.about} linkTo="about" pageLogo={SMALL_ABOUT}/>
+				<NavbarItem name={textState.projects} linkTo="projects" pageLogo={SMALL_PROJECTS}/>
+				<NavbarItem name={darkModeToggle.text} linkTo={currentPage.address} pageLogo={currentPage.logo} onClick={updateDarkMode}/>
+			</> : <>
+				<div id={Math.random().toString()} className={NAVBAR_ITEM}>{currentPage.logo}</div>
+			</>}
 		</div>
 	)
 }
 
-function NavbarItem(props: {name: JSX.Element, linkTo: string, onClick: (linkTo: string)=>void}) {
+function NavbarItem(props: {name: JSX.Element, linkTo: string, pageLogo: JSX.Element, onClick?: (linkTo: string, pageLogo: JSX.Element)=>void}) {
 	return (
-		<div id={Math.random().toString()} className={NAVBAR_ITEM} onClick={()=>{props.onClick(props.linkTo)}}>
+		<div id={Math.random().toString()} className={NAVBAR_ITEM} onClick={props.onClick ? ()=>{props.onClick!(props.linkTo, props.pageLogo)} : ()=>{}}>
 			<Link to={props.linkTo}>{props.name}</Link>
 		</div>
 	)
 }
-function setNavbarPosition() {
-	const isVertical : boolean = isNavbarVertical()
-	const navbarWidthThin : string = getNavbarWidthThin()
-	document.documentElement.style.setProperty("--navbar-item-spacing", "1" + (isVertical ? "vh" : "vw"))
-	document.getElementById(NAVBAR)!.style.bottom = isVertical ? "0vh" : "auto"
-	document.getElementById(NAVBAR)!.style.right = isVertical ? "auto" : "0vw"
-	document.getElementById(NAVBAR)!.style.flexDirection = isVertical ? "column" : "row"
-	document.getElementById(NAVBAR)!.style.height = isVertical ? "100%" : navbarWidthThin
-	document.getElementById(NAVBAR)!.style.minHeight = isVertical ? "100%" : navbarWidthThin
-	document.getElementById(NAVBAR)!.style.minWidth = isVertical ? navbarWidthThin : "100%"
-	document.getElementById(APP_INCLUDING_FOOTER)!.style.marginLeft = isVertical ? PAGE_MARGIN_NAVBAR_SIDE : "0vw"
-	document.getElementById(APP_INCLUDING_FOOTER)!.style.marginTop = isVertical ? "0vh" : PAGE_MARGIN_NAVBAR_SIDE
 
-	//Correctly position day/night option in navbar
-	const navbarItems = document.getElementsByClassName("NavbarItem")!
-	const lastNavbarItemId = navbarItems.item(navbarItems.length - 1)!.getAttribute("id")!
-	document.getElementById(lastNavbarItemId)!.style.marginInlineStart = isVertical ? "var(--navbar-item-spacing)" : "auto"
-	document.getElementById(lastNavbarItemId)!.style.marginBlockStart = isVertical ? "auto" : "var(--navbar-item-spacing)"
+function changeThemeColor() {
+    const metaThemeColor = document.querySelector("meta[name=theme-color]")!
+    metaThemeColor.setAttribute("content", document.documentElement.getAttribute("var(--background-colour-primary)")!)
+	console.log(metaThemeColor,document.documentElement.getAttribute("var(--background-colour-primary)"))
 }
 
-function getNavbarWidthThin(){
-	const amount = getIntValue(NAVBAR_WIDTH_THIN) * getAspectRatio()
-	return amount + "%"
-}
-
-function isNavbarVertical() : boolean {
-	const aspect: number = getAspectRatio()
-	return aspect > 0.9
+function isPageVertical() : boolean {
+	return getAspectRatio() < 0.9
 }
 
 function getAspectRatio() : number {

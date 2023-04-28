@@ -8,9 +8,10 @@
 	min-width: 100%;
 	display: flex;
 	justify-content: center;
+	overflow: hidden;
   }
 
-.Welcome-content {
+.WelcomeContent {
 	min-width: 50%;
 	height: 10%;
 	z-index: -1;
@@ -18,7 +19,20 @@
 	align-items: center;
 }
 
-.Welcome-text {
+.WelcomeText {
 	font-size: xx-large;
 	font-weight: 500;
+}
+
+.WelcomeLinks {
+	display: flex;
+	flex-direction: row;
+	gap: 2rem;
+	font-size: calc(var(--font-size) / 1.5);
+}
+
+.BrandLogo {
+	height: calc(xx-large / 1.5);
+	fill: var(--text-colour-primary);
+	stroke-width: 1;
 }
