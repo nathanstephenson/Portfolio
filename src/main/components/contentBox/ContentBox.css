@@ -2,7 +2,6 @@
 	--box-transition-speed: calc(4 * var(--transition-speed));
 	--side-padding: 5%;
 	--border-radius: 1.5vh;
-	--border-colour: 1px solid var(--text-colour-primary);
 }
 
 .ContentBox {

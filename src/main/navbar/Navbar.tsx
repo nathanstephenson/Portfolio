@@ -3,39 +3,36 @@ import { Link, useLocation } from 'react-router-dom'
 
 import 'App.css'
 import './Navbar.css'
-import { MOON, SUN, SQUARE as HOME, ABOUT, PROJECTS } from 'images/svg'
-
-const BLUR_AMOUNT = "10px"
+import { MOON, SUN, BARS } from 'images/svg'
+import Title from './title/Title'
 
 const NAVBAR_ITEM = "NavbarItem"
 const NAVBAR = "Navbar"
+const HEADER = "Header"
 
-const SMALL_HOME = HOME
-const WIDE_HOME = <>{SMALL_HOME} HOME</>
-const SMALL_ABOUT = ABOUT
-const WIDE_ABOUT = <>{SMALL_ABOUT} ABOUT</>
-const SMALL_PROJECTS = PROJECTS
-const WIDE_PROJECTS = <>{SMALL_PROJECTS} PROJECTS</>
+const EMPTY_NAME = <></>
+const HOME = <>HOME</>
+const ABOUT = <>ABOUT</>
+const PROJECTS = <>PROJECTS</>
 const DAY_LOGO = SUN
 const NIGHT_LOGO = MOON
-
-const locationIcons = new Map()
-locationIcons.set(undefined, SMALL_HOME)
-locationIcons.set("about", SMALL_ABOUT)
-locationIcons.set("projects", SMALL_PROJECTS)
 
 export default function Navbar() {
 	const location = useLocation().pathname.match('([^#/]+$)')?.[0]
 
 	const [textState, setTextState] = useState({
-		home: SMALL_HOME,
-		about: SMALL_ABOUT,
-		projects: SMALL_PROJECTS
+		home: EMPTY_NAME,
+		about: EMPTY_NAME,
+		projects: EMPTY_NAME
 	})
 	const [currentPage, setCurrentPage] = useState({
 		address: location ? location : "",
-		logo: locationIcons.get(location)
+		logo: BARS
 	})
+	// const [title, updateTitle] = useState({
+	// 	name: currentPage.address.toUpperCase(),
+	// 	showTitle: currentPage.address !== ''
+	// })
 	const [darkModeToggle, setDarkModeToggle] = useState({
 		isDark: true,
 		text: NIGHT_LOGO,
@@ -56,19 +53,23 @@ export default function Navbar() {
 	}, [])
 
 	useEffect(()=>{
-		function updateCurrentPage(linkTo: string = "", pageLogo: JSX.Element) {
+		function updateCurrentPage(linkTo: string = "") {
 			if(linkTo === currentPage.address){
 				setTimeout(shrink, 50)
 				return;
 			}
 			setCurrentPage({
 				address: linkTo,
-				logo: pageLogo
+				logo: currentPage.logo
 			})
+			// updateTitle(({
+			// 	name: linkTo.toUpperCase(),
+			// 	showTitle: linkTo !== ""
+			// }))
 			document.documentElement.scrollTop = 0;
 			setTimeout(shrink, 50)
 		}
-		updateCurrentPage(location, locationIcons.get(location))
+		updateCurrentPage(location)
 	}, [location])
 
 	function widen() {
@@ -77,22 +78,22 @@ export default function Navbar() {
 		}
 		setTimeout(() => {
 			setTextState({
-				home: WIDE_HOME,
-				about: WIDE_ABOUT,
-				projects: WIDE_PROJECTS
+				home: HOME,
+				about: ABOUT,
+				projects: PROJECTS
 			})
 		}, 50)
 		setIsOpen(true)
-		document.documentElement.style.setProperty("--main-blur-amount", BLUR_AMOUNT)
+		document.documentElement.style.setProperty("--main-blur-amount", "var(--blur-amount)")
 		document.documentElement.style.setProperty("--body-interaction", "none")
 		document.documentElement.style.setProperty("--webkit-user-select", "none")
 	}
 	
 	function shrink() {
 		setTextState({
-			home: SMALL_HOME,
-			about: SMALL_ABOUT,
-			projects: SMALL_PROJECTS
+			home: EMPTY_NAME,
+			about: EMPTY_NAME,
+			projects: EMPTY_NAME
 		})
 		setIsOpen(false)
 		document.documentElement.style.setProperty("--main-blur-amount", "0px")
@@ -121,22 +122,24 @@ export default function Navbar() {
 	}
 
 	return (
-		<div className={`${NAVBAR} ${isOpen ? 'open' : 'closed'}`} id={NAVBAR} onClick={widen} onMouseLeave={shrink}>
-			{isOpen ? <>
-				<NavbarItem name={textState.home} linkTo="" pageLogo={SMALL_HOME}/>
-				<NavbarItem name={textState.about} linkTo="about" pageLogo={SMALL_ABOUT}/>
-				<NavbarItem name={textState.projects} linkTo="projects" pageLogo={SMALL_PROJECTS}/>
-				<NavbarItem name={darkModeToggle.text} linkTo={currentPage.address} pageLogo={currentPage.logo} onClick={updateDarkMode}/>
-			</> : <>
-				<div id={Math.random().toString()} className={NAVBAR_ITEM}>{currentPage.logo}</div>
-			</>}
+		<div className={HEADER}>
+			<div className={`${NAVBAR} ${isOpen ? 'open' : 'closed'}`} id={NAVBAR} onClick={widen} onMouseLeave={shrink}>
+				{isOpen ? <>
+					<NavbarItem name={textState.home} linkTo=""/>
+					<NavbarItem name={textState.about} linkTo="about"/>
+					<NavbarItem name={textState.projects} linkTo="projects"/>
+					<NavbarItem name={darkModeToggle.text} linkTo={currentPage.address} onClick={updateDarkMode}/>
+				</> : <>
+					<div id={Math.random().toString()} className={NAVBAR_ITEM}>{currentPage.logo}</div>
+				</>}
+			</div>
 		</div>
 	)
 }
 
-function NavbarItem(props: {name: JSX.Element, linkTo: string, pageLogo: JSX.Element, onClick?: (linkTo: string, pageLogo: JSX.Element)=>void}) {
+function NavbarItem(props: {name: JSX.Element, linkTo: string, onClick?: (linkTo: string)=>void}) {
 	return (
-		<div id={Math.random().toString()} className={NAVBAR_ITEM} onClick={props.onClick ? ()=>{props.onClick!(props.linkTo, props.pageLogo)} : ()=>{}}>
+		<div id={Math.random().toString()} className={NAVBAR_ITEM} onClick={props.onClick ? ()=>{props.onClick!(props.linkTo)} : ()=>{}}>
 			<Link to={props.linkTo}>{props.name}</Link>
 		</div>
 	)

@@ -4,13 +4,14 @@ import initiald from 'images/initiald.jpg'
 import portfolioImage from 'images/projects/portfolio.png'
 
 import './Projects.css'
+import Title from 'main/navbar/title/Title';
 
 const DND20 = 'dnd20'
 const ASPIRE_GAME = 'aspire-game'
 const C130 = 'c130'
 const PORTFOLIO = 'portfolio'
 
-export default function Home() {
+export default function Projects() {
 	const [repositories, setRepositories] = useState([<></>])
 
 	useLayoutEffect(() => {
@@ -31,9 +32,12 @@ export default function Home() {
 	}, [])
 
 	return (
-		<div className="ProjectsContainer">
-			{repositories}
-		</div>
+		<>
+			<Title name='PROJECTS'/>
+			<div className="ProjectsContainer">
+				{repositories}
+			</div>
+		</>
 	)
 }
 

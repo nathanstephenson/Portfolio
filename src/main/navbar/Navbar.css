@@ -2,6 +2,16 @@
 	--navbar-item-spacing: 0.5rem;
 	--navbar-border-radius: calc(var(--border-radius)*1.5);
 	--navbar-font-size: xx-large;
+	--navbar-blur-amount: calc(var(--blur-amount) / 2);
+}
+
+.Header {
+	width: 100%;
+	position: fixed;
+	height: 0.75rem;
+	z-index: 9998;
+	justify-content: center;
+	top: 0;
 }
 
 .Navbar, .NavbarItem {
@@ -28,23 +38,19 @@
 	align-items: center;
 	justify-content: center;
 	vertical-align: middle;
-	z-index : 100;
+	z-index : 9999;
 }
 
 .Navbar.open {
 	min-width: 10rem;
 	min-height: 10rem;
+	backdrop-filter: blur(calc(var(--navbar-blur-amount) / 2)); 
 }
 
 .Navbar.closed {
 	min-width: 0.5rem;
 	min-height: 0.5rem;
-}
-
-@Supports (backdrop-filter: var(--frosted-glass-backdrop)) or (-webkit-backdrop-filter: var(--frosted-glass-backdrop))  {
-	.Navbar {
-		-webkit-backdrop-filter: var(--frosted-glass-backdrop);
-	}
+	backdrop-filter: blur(var(--navbar-blur-amount)); 
 }
 
 .NavbarItem {

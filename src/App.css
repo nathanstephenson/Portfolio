@@ -13,10 +13,12 @@
 
 	--font-size: large;
 	--main-blur-amount: 0px;
-	--frosted-glass-backdrop: blur(20px) saturate(200%) contrast(25%) brightness(110%);
+	--blur-amount: 10px;
 
 	--body-interaction: all;
 	--webkit-user-select: text;
+
+	--border-colour: 1px solid var(--text-colour-primary);
 }
 
 .App {
