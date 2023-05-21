@@ -10,7 +10,7 @@ const WELCOME_TEXT = "WelcomeText";
 const WELCOME_LINKS = "WelcomeLinks"
 const PARALLAX_MODIFIER = 0.8;
 
-export default function Welcome(props: any) {
+export default function Welcome() {
 	useLayoutEffect(() => {
 		render()
 	  	window.addEventListener('scroll', render)
