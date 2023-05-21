@@ -2,9 +2,12 @@ import ContentBox from 'main/components/contentBox/ContentBox'
 import { useLayoutEffect, useState } from 'react';
 import initiald from 'images/initiald.jpg'
 import portfolioImage from 'images/projects/portfolio.png'
+import { Routes, Route } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import './Projects.css'
 import Title from 'main/navbar/title/Title';
+import Invest from './invest/Invest'
 
 const DND20 = 'dnd20'
 const ASPIRE_GAME = 'aspire-game'
@@ -12,6 +15,15 @@ const C130 = 'c130'
 const PORTFOLIO = 'portfolio'
 
 export default function Projects() {
+	return(
+		<Routes>
+			<Route index element={<ProjectsMain/>}/>
+			<Route path="invest" element={<Invest/>}/>
+		</Routes>
+	)
+}
+
+export function ProjectsMain() {
 	const [repositories, setRepositories] = useState([<></>])
 
 	useLayoutEffect(() => {
@@ -20,7 +32,7 @@ export default function Projects() {
 		.then(repos => {
 			setRepositories(repos.map(repo => {
 				const repoName: string = getRepoName(repo.name)
-				const repoDescription: string = getRepoDescription(repo)
+				const repoDescription: JSX.Element = getRepoDescription(repo)
 				const repoImage: string = getRepoImage(repo.name)
 				return (
 					<ContentBox text={repoName} className='project' linkTarget={repo.html_url} img={repoImage} imgAlt={repo.name} outline={true}>
@@ -51,11 +63,11 @@ interface Repository {
 //fetch repositories from GitHub API
 async function getRepositories(username: string): Promise<Repository[]> {
 	try {
-	const response = await fetch(`https://api.github.com/users/${username}/repos`);
-	if (!response.ok) {
-		throw new Error(`Failed to fetch repositories for user ${username}: ${response.statusText}`);
-	}
-	return response.json();
+		const response = await fetch(`https://api.github.com/users/${username}/repos`);
+		if (!response.ok) {
+			throw new Error(`Failed to fetch repositories for user ${username}: ${response.statusText}`);
+		}
+		return response.json();
 	} catch (error) {
 		if(error instanceof Error){
 			throw new Error(`Failed to fetch repositories for user ${username}: ${error.message}`);
@@ -93,19 +105,19 @@ function getRepoName(name: string): string {
 	return displayName
 }
 
-function getRepoDescription(repo: Repository): string {
+function getRepoDescription(repo: Repository): JSX.Element {
 	const name = repo.name
 	switch (name.toLowerCase()) {
 		case DND20:
-			return `Final Year Project: This was a proof of concept of how I would build a web-client for a tabletop game, inspired by the rules of the popular game "Dungeons and Dragons". The front-end is built in React and the backend is on a Node Express server, with Apollo-GraphQL as middleware.`
+			return <>Final Year Project: This was a proof of concept of how I would build a web-client for a tabletop game, inspired by the rules of the popular game "Dungeons and Dragons". The front-end is built in React and the backend is on a Node Express server, with Apollo-GraphQL as middleware. <Link to='invest'>More...</Link></>
 		case ASPIRE_GAME:
-			return `This is an exploration into developing in C++ with OpenGL. The aim is to create a graphical display that can later be used to develop platformer games.`
+			return <>This is an exploration into developing in C++ with OpenGL. The aim is to create a graphical display that can later be used to develop platformer games.</>
 		case C130:
-			return `A demo project created as part of Wiley Edge training. This was a simple Java project containing a couple of exercises which were deliverables for the course.`
+			return <>A demo project created as part of Wiley Edge training. This was a simple Java project containing a couple of exercises which were deliverables for the course.</>
 		case PORTFOLIO:
-			return `You're looking at it: this website is meant to demonstrate my ability to develop using React and TypeScript, and will also function as a hub for any projects I work on that have output APIs.`
+			return <>You're looking at it: this website is meant to demonstrate my ability to develop using React and TypeScript, and will also function as a hub for any projects I work on that have output APIs.</>
 		default:
-			return repo.description
+			return <>{repo.description}</>
 	}
 }
 
