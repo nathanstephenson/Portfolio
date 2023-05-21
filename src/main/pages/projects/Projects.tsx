@@ -13,6 +13,7 @@ const DND20 = 'dnd20'
 const ASPIRE_GAME = 'aspire-game'
 const C130 = 'c130'
 const PORTFOLIO = 'portfolio'
+const INVEST = 'investomatic'
 
 export default function Projects() {
 	return(
@@ -98,6 +99,9 @@ function getRepoName(name: string): string {
 		case C130:
 			displayName = `Wiley Edge Demo Repo`
 			break
+		case INVEST:
+			displayName = 'Investing Algorithm'
+			break
 	}
 	if(displayName !== name){
 		displayName += ` (${name})`
@@ -109,13 +113,15 @@ function getRepoDescription(repo: Repository): JSX.Element {
 	const name = repo.name
 	switch (name.toLowerCase()) {
 		case DND20:
-			return <>Final Year Project: This was a proof of concept of how I would build a web-client for a tabletop game, inspired by the rules of the popular game "Dungeons and Dragons". The front-end is built in React and the backend is on a Node Express server, with Apollo-GraphQL as middleware. <Link to='invest'>More...</Link></>
+			return <>Final Year Project: This was a proof of concept of how I would build a web-client for a tabletop game, inspired by the rules of the popular game "Dungeons and Dragons". The front-end is built in React and the backend is on a Node Express server, with Apollo-GraphQL as middleware.</>
 		case ASPIRE_GAME:
 			return <>This is an exploration into developing in C++ with OpenGL. The aim is to create a graphical display that can later be used to develop platformer games.</>
 		case C130:
 			return <>A demo project created as part of Wiley Edge training. This was a simple Java project containing a couple of exercises which were deliverables for the course.</>
 		case PORTFOLIO:
 			return <>You're looking at it: this website is meant to demonstrate my ability to develop using React and TypeScript, and will also function as a hub for any projects I work on that have output APIs.</>
+		case INVEST:
+			return <>A project involving a node api and a rust application that calculates whether to buy or sell stocks. <Link to='invest'>More...</Link></>
 		default:
 			return <>{repo.description}</>
 	}
