@@ -25,20 +25,21 @@ export default function Invest(): JSX.Element {
 	const [ticker, setTicker] = useState('NFLX')
 	const [data, setData] = useState([{value: 0, timestamp: 0}])
 	const [tickerOptions, setTickerOptions] = useState([<></>])
+	const [algoRunning, setAlgoRunning] = useState(false)
 
 	ChartJS.register(LinearScale, PointElement, LineElement, Tooltip, Legend)
 
 	useEffect(() => {
 		getData(ticker).then((res) => setData(res))
-		getTickerOptions().then((res) => setTickerOptions(res.map(option => <TickerOption name={option} onClick={()=>{setTicker(option)}}/>)))
-	}, [ticker])
+		getTickerOptions().then((res) => setTickerOptions(res.sort().map(option => <TickerOption name={option} onClick={()=>{setTicker(option)}}/>)))
+	}, [ticker, algoRunning])
 
 	return (
 		<>
-			<Title name='Investing Algorithm'/>
-			<Scatter data={mapChartData(ticker, data)}/>
+			<Title name="Investing Algorithm"/>
+			<ContentBox className="Graph"><Scatter data={mapChartData(ticker, data)}/></ContentBox>
 			{tickerOptions.length === 0 ? <></> : <div className="TickerOptions">{tickerOptions}</div>}
-			<button onClick={() => get(REQ_ROOT + "exec")}>Run Algo</button>
+			<button disabled={algoRunning} onClick={() => runAlgo(setAlgoRunning)}>Run Algo</button>
 		</>
 	)
 }
@@ -61,6 +62,11 @@ function mapChartData(ticker: string, data: OutputData[]) { // no return type th
 		}],
 	}
 	return retVal
+}
+
+async function runAlgo(setAlgoRunning: (algoRunning: boolean)=>void) {
+	setAlgoRunning(true)
+	await get(REQ_ROOT + "exec").then(() => setAlgoRunning(false))
 }
 
 async function getTickerOptions(): Promise<string[]> {
