@@ -1,13 +1,15 @@
 import ContentBox from 'main/components/contentBox/ContentBox'
 import { useLayoutEffect, useState } from 'react';
-import initiald from 'images/initiald.jpg'
-import portfolioImage from 'images/projects/portfolio.png'
 import { Routes, Route } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 
 import './Projects.css'
 import Title from 'main/navbar/title/Title';
 import Invest from './invest/Invest'
+
+import initiald from 'images/initiald.jpg'
+import portfolioImage from 'images/projects/portfolio.png'
+import investImage from 'images/projects/invest.png'
 
 const DND20 = 'dnd20'
 const ASPIRE_GAME = 'aspire-game'
@@ -131,6 +133,8 @@ function getRepoImage(name: string): string {
 	switch (name.toLowerCase()) {
 		case PORTFOLIO:
 			return portfolioImage
+		case INVEST:
+			return investImage
 		default:
 			return initiald
 	}
