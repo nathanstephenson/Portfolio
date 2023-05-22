@@ -8,7 +8,11 @@ import {
   Legend,
 } from 'chart.js'
 import {Scatter} from 'react-chartjs-2'
+
+import './Invest.css'
+
 import Title from "main/navbar/title/Title"
+import ContentBox from "main/components/contentBox/ContentBox"
 
 const REQ_ROOT = "http://localhost:8080/"
 
@@ -40,9 +44,9 @@ export default function Invest(): JSX.Element {
 }
 
 function TickerOption(props: {name: string, onClick: ()=>void}): JSX.Element {
-	return (<>
+	return (
 		<button onClick={props.onClick}>{props.name}</button>
-	</>)
+	)
 }
 
 function mapChartData(ticker: string, data: OutputData[]) { // no return type thanks to bad ts compatibility
