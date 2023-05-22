@@ -18,7 +18,7 @@ const DAY_LOGO = SUN
 const NIGHT_LOGO = MOON
 
 export default function Navbar() {
-	const location = useLocation().pathname.match('([^#/]+$)')?.[0]
+	const location = useLocation().pathname.match('([^#/]*[a-z|/]+$)')?.[0]
 
 	const [textState, setTextState] = useState({
 		home: EMPTY_NAME,
@@ -29,10 +29,6 @@ export default function Navbar() {
 		address: location ? location : "",
 		logo: BARS
 	})
-	// const [title, updateTitle] = useState({
-	// 	name: currentPage.address.toUpperCase(),
-	// 	showTitle: currentPage.address !== ''
-	// })
 	const [darkModeToggle, setDarkModeToggle] = useState({
 		isDark: true,
 		text: NIGHT_LOGO,
