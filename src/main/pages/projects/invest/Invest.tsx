@@ -16,6 +16,11 @@ import ContentBox from "main/components/contentBox/ContentBox"
 
 const REQ_ROOT = "http://localhost:8080/"
 
+interface Output {
+	score: number,
+	data: OutputData[]
+}
+
 interface OutputData {
 	value: number,
 	timestamp: number
@@ -24,19 +29,24 @@ interface OutputData {
 export default function Invest(): JSX.Element {
 	const [ticker, setTicker] = useState('NFLX')
 	const [data, setData] = useState([{value: 0, timestamp: 0}])
+	const [score, setScore] = useState(0)
 	const [tickerOptions, setTickerOptions] = useState([<></>])
 	const [algoRunning, setAlgoRunning] = useState(false)
 
 	ChartJS.register(LinearScale, PointElement, LineElement, Tooltip, Legend)
 
 	useEffect(() => {
-		getData(ticker).then((res) => setData(res))
+		getData(ticker).then((res) => {
+			setData(res.data)
+			setScore(res.score)
+		})
 		getTickerOptions().then((res) => setTickerOptions(res.sort().map(option => <TickerOption name={option} onClick={()=>{setTicker(option)}}/>)))
 	}, [ticker, algoRunning])
 
 	return (
 		<>
 			<Title name="Investing Algorithm"/>
+			Overall Score for {ticker}: {score}
 			<ContentBox className="Graph"><Scatter data={mapChartData(ticker, data)}/></ContentBox>
 			{tickerOptions.length === 0 ? <></> : <div className="TickerOptions">{tickerOptions}</div>}
 			<button disabled={algoRunning} onClick={() => runAlgo(setAlgoRunning)}>Run Algo</button>
@@ -74,12 +84,12 @@ async function getTickerOptions(): Promise<string[]> {
 	return get(reqUrl)
 }
 
-async function getData(ticker: string): Promise<OutputData[]> {
+async function getData(ticker: string): Promise<Output> {
 	const reqUrl = REQ_ROOT + "visualise?" + ticker
 	return get(reqUrl)
 }
 
-async function get(reqUrl: string): Promise<any[]> {
+async function get(reqUrl: string): Promise<any> {
 	try {
 		const response = await fetch(reqUrl)
 		if (!response.ok) {
