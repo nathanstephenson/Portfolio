@@ -45,7 +45,6 @@ export default function Invest(): JSX.Element {
 
 	return (
 		<>
-			<Title name="Investing Algorithm"/>
 			Overall Score for {ticker}: {score}
 			<ContentBox className="Graph"><Scatter data={mapChartData(ticker, data)}/></ContentBox>
 			{tickerOptions.length === 0 ? <></> : <div className="TickerOptions">{tickerOptions}</div>}

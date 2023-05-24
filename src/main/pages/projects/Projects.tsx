@@ -38,7 +38,7 @@ export function ProjectsMain() {
 				const repoDescription: JSX.Element = getRepoDescription(repo)
 				const repoImage: string = getRepoImage(repo.name)
 				return (
-					<ContentBox text={repoName} className='project' linkTarget={repo.html_url} img={repoImage} imgAlt={repo.name} outline={true}>
+					<ContentBox text={repoName} className='project' linkTarget={repo.html_url} img={repoImage} imgAlt={repo.name} more={getMore(repo.name)} outline={true}>
 						<p>{repoDescription}</p>
 					</ContentBox>
 				)
@@ -123,7 +123,7 @@ function getRepoDescription(repo: Repository): JSX.Element {
 		case PORTFOLIO:
 			return <>You're looking at it: this website is meant to demonstrate my ability to develop using React and TypeScript, and will also function as a hub for any projects I work on that have output APIs.</>
 		case INVEST:
-			return <>A project involving a node api and a rust application that calculates whether to buy or sell stocks. <Link to='invest'>More...</Link></>
+			return <>A project involving a node api and a rust application that calculates whether to buy or sell stocks.</>
 		default:
 			return <>{repo.description}</>
 	}
@@ -138,4 +138,13 @@ function getRepoImage(name: string): string {
 		default:
 			return initiald
 	}
+}
+
+function getMore(name: string): JSX.Element | undefined {
+	switch (name.toLowerCase()) {
+		case INVEST:
+			return <Invest/>
+		default:
+			return undefined
+	}	
 }

@@ -6,6 +6,7 @@
 
 .ContentBox {
 	display: flex;
+	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	opacity: 1;
@@ -15,10 +16,16 @@
 	will-change: opacity, visibility;
 	max-width: 80%;
 	border-start-start-radius: var(--border-radius);
-    border-start-end-radius: var(--border-radius);
-    border-end-start-radius: var(--border-radius);
-    border-end-end-radius: var(--border-radius);
+	border-start-end-radius: var(--border-radius);
+	border-end-start-radius: var(--border-radius);
+	border-end-end-radius: var(--border-radius);
 	overflow: hidden; 
+  }
+
+.ContentBoxImageMain {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
   }
 
   .ContentBox.invisible {
@@ -75,3 +82,19 @@
 	width: 100%;
 	font-size: x-large;
   }
+
+.ContentBoxMoreButton {
+	align-self: flex-end;
+	border-start-start-radius: var(--border-radius);
+	border-start-end-radius: var(--border-radius);
+	border-end-start-radius: var(--border-radius);
+	border-end-end-radius: var(--border-radius);
+}
+
+.ContentBoxMore {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	align-content: center;
+	width: 100%;
+}
