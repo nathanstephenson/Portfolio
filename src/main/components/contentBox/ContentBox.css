@@ -102,7 +102,7 @@
 	width: 100%;
 }
 
-.ContentBoxButton {
+button {
 	border-start-start-radius: var(--border-radius);
 	border-start-end-radius: var(--border-radius);
 	border-end-start-radius: var(--border-radius);
@@ -112,7 +112,7 @@
 	margin: 0.5rem;
 }
 
-.ContentBoxButton.More {
+.ContentBoxMoreButton {
 	bottom: 0;
 	align-self: flex-end;
 }

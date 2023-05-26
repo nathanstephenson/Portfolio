@@ -26,8 +26,6 @@ interface OutputData {
 	timestamp: number
 }
 
-const CONTENT_BOX_BUTTON = "ContentBoxButton"
-
 export default function Invest(): JSX.Element {
 	const [ticker, setTicker] = useState('NFLX')
 	const [data, setData] = useState([{value: 0, timestamp: 0}])
@@ -50,14 +48,14 @@ export default function Invest(): JSX.Element {
 			<Scatter data={mapChartData(ticker, data)}/>
 			{tickerOptions.length === 0 ? <></> : <div className="TickerOptions">{tickerOptions}</div>}
 			Overall Score for {ticker}: {score}
-			<button disabled={algoRunning} onClick={() => runAlgo(setAlgoRunning)} className={CONTENT_BOX_BUTTON}>Run Algo</button>
+			<button disabled={algoRunning} onClick={() => runAlgo(setAlgoRunning)}>Run Algo</button>
 		</ContentBox>
 	)
 }
 
 function TickerOption(props: {name: string, onClick: ()=>void}): JSX.Element {
 	return (
-		<button onClick={props.onClick} className={CONTENT_BOX_BUTTON}>{props.name}</button>
+		<button onClick={props.onClick}>{props.name}</button>
 	)
 }
 
