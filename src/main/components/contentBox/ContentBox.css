@@ -102,14 +102,19 @@
 	width: 100%;
 }
 
-.ContentBoxMoreButton {
-	align-self: flex-end;
+.ContentBoxButton {
 	border-start-start-radius: var(--border-radius);
 	border-start-end-radius: var(--border-radius);
 	border-end-start-radius: var(--border-radius);
 	border-end-end-radius: var(--border-radius);
+	color: var(--text-colour-primary);
+	background-color: var(--background-colour-primary);
 	margin: 0.5rem;
+}
+
+.ContentBoxButton.More {
 	bottom: 0;
+	align-self: flex-end;
 }
 
 .ContentBoxMore {

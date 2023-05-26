@@ -12,7 +12,7 @@ const CONTENT_BOX_TITLE = "ContentBoxTitle"
 const CONTENT_BOX_CHILDREN = "ContentBoxChildren"
 const CONTENT_BOX_MAIN_AND_MORE_BUTTON = "ContentBoxMainMoreButton"
 const CONTENT_BOX_MORE = "ContentBoxMore"
-const CONTENT_BOX_MORE_BUTTON = "ContentBoxMoreButton" 
+const CONTENT_BOX_BUTTON = "ContentBoxButton" 
 
 export default function ContentBox(props: {id?: string, className?:string, img?: string, imgAlt?: string, text?: string, linkTarget?: string, outline?: boolean, children?: any, more?: JSX.Element}) {
 	const [isVisible, setVisible] = useState(false);
@@ -54,7 +54,7 @@ export default function ContentBox(props: {id?: string, className?:string, img?:
 	}, [showMore])
 	
 	const image = <img id={CONTENT_BOX_IMAGE+id} src={props.img} alt={props.imgAlt ? props.imgAlt : 'image'} />
-	const moreButton = <button className={CONTENT_BOX_MORE_BUTTON} onClick={() => setShowMore(!showMore)}>{showMore ? "/\\" : "\\/"}</button>
+	const moreButton = <button className={CONTENT_BOX_BUTTON + " More"} onClick={() => setShowMore(!showMore)}>{showMore ? "/\\" : "\\/"}</button>
 	return (
 		<div className={`${CONTENT_BOX} ${props.className ? props.className  : ''} ${isVisible ? '' : 'invisible'} ${props.outline ? 'outlined' : ''}`} id={id} ref={domRef}>
 			<div id={CONTENT_BOX_IMAGE_AND_MAIN+id} className={`${CONTENT_BOX_IMAGE_AND_MAIN}`}>
