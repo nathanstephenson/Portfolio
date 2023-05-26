@@ -34,7 +34,7 @@ export function ProjectsMain() {
 		.then((repositories) => sortRepositories(repositories))
 		.then(repos => {
 			setRepositories(repos.map(repo => {
-				const repoName: string = getRepoName(repo.name)
+				const repoName: string = getRepoName(repo)
 				const repoDescription: JSX.Element = getRepoDescription(repo)
 				const repoImage: string = getRepoImage(repo.name)
 				return (
@@ -89,8 +89,9 @@ function sortRepositories(repositories: Repository[]): Repository[] {
 	});
 }
 
-function getRepoName(name: string): string {
-	let displayName = name
+function getRepoName(repo: Repository): string {
+	let displayName = repo.name
+	const name = repo.name
 	switch (name.toLowerCase()) {
 		case DND20:
 			displayName = `Tabletop Game Simulator`
@@ -105,9 +106,7 @@ function getRepoName(name: string): string {
 			displayName = 'Investing Algorithm'
 			break
 	}
-	if(displayName !== name){
-		displayName += ` (${name})`
-	}
+	displayName += ` (updated: ${new Date(repo.pushed_at).toLocaleDateString()})`
 	return displayName
 }
 

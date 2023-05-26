@@ -45,10 +45,12 @@ export default function Invest(): JSX.Element {
 
 	return (
 		<>
-			Overall Score for {ticker}: {score}
-			<ContentBox className="Graph"><Scatter data={mapChartData(ticker, data)}/></ContentBox>
-			{tickerOptions.length === 0 ? <></> : <div className="TickerOptions">{tickerOptions}</div>}
-			<button disabled={algoRunning} onClick={() => runAlgo(setAlgoRunning)}>Run Algo</button>
+			<ContentBox className="Graph">
+				<Scatter data={mapChartData(ticker, data)}/>
+				{tickerOptions.length === 0 ? <></> : <div className="TickerOptions">{tickerOptions}</div>}
+				Overall Score for {ticker}: {score}
+				<button disabled={algoRunning} onClick={() => runAlgo(setAlgoRunning)}>Run Algo</button>
+			</ContentBox>
 		</>
 	)
 }
