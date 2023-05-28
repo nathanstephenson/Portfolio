@@ -1,7 +1,6 @@
 import ContentBox from 'main/components/contentBox/ContentBox'
 import { useLayoutEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom'
-import { Link } from 'react-router-dom'
 
 import './Projects.css'
 import Title from 'main/navbar/title/Title';
@@ -31,7 +30,7 @@ export function ProjectsMain() {
 
 	useLayoutEffect(() => {
 		getRepositories('nathanstephenson')
-		.then((repositories) => sortRepositories(repositories))
+		.then(repositories => sortRepositories(repositories))
 		.then(repos => {
 			setRepositories(repos.map(repo => {
 				const repoName: string = getRepoName(repo)

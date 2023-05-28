@@ -62,12 +62,12 @@ function TickerOption(props: {name: string, onClick: ()=>void}): JSX.Element {
 function mapChartData(ticker: string, data: OutputData[]) { // no return type thanks to bad ts compatibility
 	const retVal = {
 		datasets: [{
-		      	label: ticker,
-		     	data: data.map((dataPoint, index) => ({
+			label: ticker,
+			data: data.map((dataPoint, index) => ({
 				x: index,
 				y: dataPoint.value,
-		      	})),
-		      	backgroundColor: 'rgba(255, 99, 132, 1)',
+			})),
+			backgroundColor: 'rgba(255, 99, 132, 1)',
 		}],
 	}
 	return retVal

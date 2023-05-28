@@ -21,7 +21,6 @@ export default function ContentBox(props: {id?: string, className?:string, img?:
 	const id = props.id ? props.id : Math.random().toString();
 
 	useEffect(() => {
-
 		const observer = new IntersectionObserver(entries => {
 			entries.forEach(entry => {
 				setVisible(entry.isIntersecting)
@@ -66,7 +65,7 @@ export default function ContentBox(props: {id?: string, className?:string, img?:
 									: <a id={CONTENT_BOX_TITLE+id} className={CONTENT_BOX_TITLE} href={props.linkTarget} target='_blank' rel="noreferrer">{props.text}</a>
 							)
 						}
-						{<div className={CONTENT_BOX_CHILDREN}>{props.children}</div>}
+						<div className={CONTENT_BOX_CHILDREN}>{props.children}</div>
 					</div>
 					{props.more && moreButton}
 				</div>

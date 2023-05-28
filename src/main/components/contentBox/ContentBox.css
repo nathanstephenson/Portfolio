@@ -1,7 +1,7 @@
 :root {
 	--box-transition-speed: calc(4 * var(--transition-speed));
 	--side-padding: 5%;
-	--border-radius: 0.75vh;
+	--border-radius: 0.75rem;
 }
 
 .ContentBox {
@@ -20,31 +20,31 @@
 	border-end-start-radius: var(--border-radius);
 	border-end-end-radius: var(--border-radius);
 	overflow: hidden; 
-  }
+}
 
 .ContentBoxImageMain {
 	display: flex;
 	flex-direction: row;
 	width: 100%;
 	height: 100%;
-  }
+}
 
-  .ContentBox.invisible {
+.ContentBox.invisible {
 	opacity: 0;
 	visibility: hidden;
 	transform: translateY(10vh);
-  }
+}
 
-  .ContentBox.outlined {
+.ContentBox.outlined {
 	border-top: var(--border-colour);
 	border-bottom: var(--border-colour);
 	margin: 2rem;
 	background-color: rgba(128, 128, 128, 0.1);
 	backdrop-filter: var(--frosted-glass-backdrop);
 	-webkit-backdrop-filter: var(--frosted-glass-backdrop);
-  }
+}
 
-  .ContentBoxImage {
+.ContentBoxImage {
 	position: relative;
 	display: inline-block;
 	max-width: 30%;
@@ -53,36 +53,36 @@
 	left: 0;
 	border-right: var(--border-colour);
 	overflow: hidden; 
-  }
+}
 
-  .ContentBoxImage.img {
+.ContentBoxImage.img {
 	display: block;
 	position: absolute;
 	min-width: 100%;
 	min-height: 100%;
 	transition: transform var(--transition-speed) ease-in-out;
-  }
+}
 
-  .ContentBoxImage.img:hover {
+.ContentBoxImage.img:hover {
 	transform: scale(1.2); /* Apply a scale transformation on hover to zoom the image by 20% */
-  }
+}
 
-  .ContentBoxMain {
+.ContentBoxMain {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-items: center;
 	width: 100%;
 	height: 100%;
-  }
+}
 
-  .ContentBoxTitle {
+.ContentBoxTitle {
 	justify-self: center;
 	align-self: center;
 	width: 100%;
 	font-size: x-large;
 	padding: 0.3rem;
-  }
+}
 
 .ContentBoxChildren {
 	display: flex;
