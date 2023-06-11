@@ -16,3 +16,13 @@
 	min-height: 50vh;
 }
 
+.OrderPanelInputs {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+}
+
+.OrderPanelInput {
+	display: flex;
+	flex-direction: row;
+}
